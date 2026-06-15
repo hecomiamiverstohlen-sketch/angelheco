@@ -140,7 +140,39 @@ document.addEventListener('DOMContentLoaded', () => {
     // Reduce volume slightly to make it non-intrusive
     bgMusic.volume = 0.35;
 
-    musicBtn.addEventListener('click', () => {
+    // Helper to start playing audio and update UI state
+    function playAudio() {
+        bgMusic.play().then(() => {
+            musicBtn.classList.add('playing');
+            playIcon.classList.add('hidden');
+            pauseIcon.classList.remove('hidden');
+            removeAutoplayTriggers();
+        }).catch(err => {
+            console.log("Autoplay waiting for user interaction.", err);
+        });
+    }
+
+    // Attempt autoplay immediately
+    playAudio();
+
+    // Workaround: trigger play on first user interaction anywhere on the document
+    const autoplayTriggers = ['click', 'touchstart', 'scroll', 'keydown'];
+    function triggerAutoplay() {
+        playAudio();
+    }
+    
+    autoplayTriggers.forEach(trigger => {
+        document.addEventListener(trigger, triggerAutoplay, { once: true, passive: true });
+    });
+
+    function removeAutoplayTriggers() {
+        autoplayTriggers.forEach(trigger => {
+            document.removeEventListener(trigger, triggerAutoplay);
+        });
+    }
+
+    musicBtn.addEventListener('click', (e) => {
+        e.stopPropagation(); // Stop propagation to avoid document trigger
         if (bgMusic.paused) {
             bgMusic.play().then(() => {
                 musicBtn.classList.add('playing');
@@ -365,9 +397,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Try saving to local storage instead
             const localUrl = await uploadPhotoToLocalStorage(dateStr, file);
             if (localUrl) {
-                console.log('Successfully saved photo to local storage fallback.');
-                // Show a helpful notification to the user so they know it fell back
-                alert('Supabase is not configured yet (or table/bucket memories does not exist). Saving to your browser\'s local storage instead!');
+                console.log('Successfully saved photo to local storage fallback. Note: Supabase is not configured yet (or table/bucket memories does not exist).');
                 return localUrl;
             }
             
