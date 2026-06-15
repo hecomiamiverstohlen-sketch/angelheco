@@ -1,0 +1,10 @@
+# IDE/Editor config
+.vscode/
+.idea/
+.gemini/
+*.log
+
+# OS files
+Thumbs.db
+ehthumbs.db
+Desktop.ini

@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy 8 Months, Babe!</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Sacramento&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Background Canvas for Floating Hearts -->
+    <canvas id="particles-canvas"></canvas>
+
+    <!-- Floating Music Controller -->
+    <div class="music-controller" id="music-controller">
+        <audio id="bg-music" loop>
+            <source src="assets/Shelly - Steeeam.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+        <button id="music-btn" aria-label="Toggle Music" class="music-btn">
+            <div class="visualizer">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+            <svg class="music-icon play-icon" viewBox="0 0 24 24" width="24" height="24">
+                <path fill="currentColor" d="M8 5v14l11-7z"/>
+            </svg>
+            <svg class="music-icon pause-icon hidden" viewBox="0 0 24 24" width="24" height="24">
+                <path fill="currentColor" d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+            </svg>
+        </button>
+    </div>
+
+    <!-- MAIN CONTAINER -->
+    <main class="app-container">
+        
+        <!-- HERO SECTION -->
+        <header class="hero" id="hero-section">
+            <div class="glass-card hero-card fade-in">
+                <div class="sparkles-container">✨ 💙 ✨</div>
+                <h1 class="romantic-title">Happy 8 Months, Babe!</h1>
+                <p class="subtitle">Every second apart has made me love you more.</p>
+                <div class="heart-pulse-icon">
+                    <svg viewBox="0 0 24 24" width="64" height="64" class="svg-heart">
+                        <path fill="var(--accent-blue)" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                    </svg>
+                </div>
+                <a href="#counter-section" class="scroll-down-btn" aria-label="Scroll Down">
+                    <svg viewBox="0 0 24 24" width="24" height="24">
+                        <path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+                    </svg>
+                </a>
+            </div>
+        </header>
+
+        <!-- COUNTDOWN / COUNTUP SECTION -->
+        <section class="section" id="counter-section">
+            <div class="section-header fade-in">
+                <span class="badge">Our Timeline</span>
+                <h2>Counting Every Moment</h2>
+                <p>Time passed since we promised to love each other.</p>
+            </div>
+            
+            <div class="counter-grid">
+                <div class="counter-card glass-card fade-in">
+                    <span class="number" id="count-days">00</span>
+                    <span class="label">Days</span>
+                </div>
+                <div class="counter-card glass-card fade-in">
+                    <span class="number" id="count-hours">00</span>
+                    <span class="label">Hours</span>
+                </div>
+                <div class="counter-card glass-card fade-in">
+                    <span class="number" id="count-minutes">00</span>
+                    <span class="label">Minutes</span>
+                </div>
+                <div class="counter-card glass-card fade-in">
+                    <span class="number" id="count-seconds">00</span>
+                    <span class="label">Seconds</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- LDR MAP SECTION -->
+        <section class="section" id="ldr-section">
+            <div class="glass-card ldr-map-card fade-in">
+                <div class="ldr-cities">
+                    <div class="city-indicator left-city">
+                        <span class="pulse-dot"></span>
+                        <h3>Here</h3>
+                        <p>With Me</p>
+                    </div>
+                    <div class="city-indicator right-city">
+                        <span class="pulse-dot"></span>
+                        <h3>There</h3>
+                        <p>Babe</p>
+                    </div>
+                </div>
+
+                <!-- LDR SVG Connection Path -->
+                <div class="svg-map-container">
+                    <svg viewBox="0 0 800 200" width="100%" height="150" class="connection-svg">
+                        <defs>
+                            <linearGradient id="line-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="var(--primary-pink)" />
+                                <stop offset="50%" stop-color="var(--accent-red)" />
+                                <stop offset="100%" stop-color="var(--primary-pink)" />
+                            </linearGradient>
+                            <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+                                <feGaussianBlur stdDeviation="5" result="blur" />
+                                <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                            </filter>
+                        </defs>
+                        <!-- Connecting Arc -->
+                        <path id="flight-path" d="M 100 120 Q 400 20 700 120" fill="none" stroke="url(#line-grad)" stroke-width="4" stroke-linecap="round" stroke-dasharray="8 6" />
+                        
+                        <!-- Glowing plane/heart traversing path -->
+                        <g id="traveler">
+                            <path d="M-10,-10 L10,-10 L10,10 L-10,10 Z" fill="none" />
+                            <path fill="var(--accent-blue)" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" transform="scale(0.8) translate(-12, -16)" filter="url(#glow)" />
+                        </g>
+                    </svg>
+                </div>
+
+                <blockquote class="ldr-quote">
+                    "Distance means so little when someone means so much. No matter how many miles separate us, our hearts beat to the exact same rhythm."
+                </blockquote>
+            </div>
+        </section>
+
+        <!-- INTERACTIVE ENVELOPE / LOVE LETTER SECTION -->
+        <section class="section" id="letter-section">
+            <div class="section-header fade-in">
+                <span class="badge">For Your Eyes Only</span>
+                <h2>A Letter From My Heart</h2>
+                <p>Click the envelope below to open your virtual letter.</p>
+            </div>
+
+            <!-- Envelope Wrapper -->
+            <div class="envelope-container fade-in">
+                <div class="envelope" id="envelope">
+                    <div class="flap front"></div>
+                    <div class="pocket front"></div>
+                    <div class="letter" id="letter">
+                        <div class="letter-inner">
+                            <div class="letter-header">
+                                <span class="romantic-date">June 15, 2026</span>
+                                <h3 class="letter-greeting">Dearest Angel,</h3>
+                            </div>
+                            <div class="letter-body">
+                                <p>Can you believe it's already been eight months since we began this journey? Although the miles keep us physically apart, they have only drawn our hearts closer together.</p>
+                                <p>I cherish every late-night phone call, every video date where we cooked "together," and all the moments we've shared, despite the screens in front of us. Your laughter is my favorite sound, and knowing you are in my life makes every obstacle worth facing.</p>
+                                <p>Happy 8th Monthsary, my love. Thank you for being the wonderful, beautiful, and loving person that you are. I count down the days until we no longer have to say goodbye to a screen, but can finally hold each other close.</p>
+                                <p class="letter-sig">Forever and always yours,</p>
+                                <p class="letter-name">Your Love</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="envelope-hearts" id="envelope-hearts"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MEMORY TIMELINE (TIMELESS PROMISES) -->
+        <section class="section" id="timeline-section">
+            <div class="section-header fade-in">
+                <span class="badge">Our Love</span>
+                <h2>To My Babe</h2>
+                <p>Timeless expressions of my love, partnership, and gratitude for you.</p>
+            </div>
+
+            <div class="timeline-container fade-in">
+                <div class="timeline-line"></div>
+                
+                <div class="timeline-slider">
+                    <!-- Card 1 -->
+                    <div class="timeline-card glass-card" data-idx="1">
+                        <div class="polaroid-img">
+                            <img src="assets/Screenshot 2026-06-15 215730.png" alt="My Constant" class="placeholder-img" id="img-m1">
+                            <div class="polaroid-caption">💙</div>
+                        </div>
+                        <div class="timeline-text">
+                            <span class="card-badge">My Constant</span>
+                            <h3>The Always Approach</h3>
+                            <p>You are the best decision I’ve ever made. Every day, I choose you—not just for the big moments, but for all the small, quiet ones in between. My love for you only grows deeper, and I’m so grateful to have you by my side.</p>
+                        </div>
+                    </div>
+
+                    <!-- Card 2 -->
+                    <div class="timeline-card glass-card" data-idx="6">
+                        <div class="polaroid-img">
+                            <img src="assets/Screenshot 2026-06-15 215742.png" alt="Us Against the World" class="placeholder-img" id="img-m6">
+                            <div class="polaroid-caption">♾️</div>
+                        </div>
+                        <div class="timeline-text">
+                            <span class="card-badge">Us Against the World</span>
+                            <h3>Growing Together</h3>
+                            <p>No matter what life throws our way, I know we can handle it because we’re a team. You are my greatest support, my best friend, and my home. I love you more than words can say, and I can't wait to keep building our future together.</p>
+                        </div>
+                    </div>
+
+                    <!-- Card 3 -->
+                    <div class="timeline-card glass-card" data-idx="8">
+                        <div class="polaroid-img">
+                            <img src="assets/Screenshot 2026-06-15 215714.png" alt="Simply, You" class="placeholder-img" id="img-m8">
+                            <div class="polaroid-caption">✨</div>
+                        </div>
+                        <div class="timeline-text">
+                            <span class="card-badge">Simply, You</span>
+                            <h3>Forever & Now</h3>
+                            <p>I fall in love with you all over again every single day. Thank you for being exactly who you are and for letting me love you. You bring so much light into my life, and I am so lucky to call you mine.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MEMORY BANK SECTION -->
+        <section class="section" id="memory-section">
+            <div class="section-header fade-in">
+                <span class="badge">Our Memories</span>
+                <h2>Memory Bank</h2>
+                <p>Our everyday selfies — one photo for each day we share together.</p>
+            </div>
+
+            <div class="memory-bank glass-card fade-in">
+                <!-- Calendar Navigation -->
+                <div class="calendar-nav">
+                    <button class="cal-nav-btn" id="cal-prev" aria-label="Previous Month">
+                        <svg viewBox="0 0 24 24" width="20" height="20"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M15 18l-6-6 6-6"/></svg>
+                    </button>
+                    <h3 class="cal-month-label" id="cal-month-label">October 2025</h3>
+                    <button class="cal-nav-btn" id="cal-next" aria-label="Next Month">
+                        <svg viewBox="0 0 24 24" width="20" height="20"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M9 18l6-6-6-6"/></svg>
+                    </button>
+                </div>
+
+                <!-- Memory Stats -->
+                <div class="memory-stats">
+                    <div class="stat-item">
+                        <span class="stat-number" id="stat-total">0</span>
+                        <span class="stat-label">Photos Saved</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" id="stat-streak">0</span>
+                        <span class="stat-label">Day Streak</span>
+                    </div>
+                </div>
+
+                <!-- Day-of-week headers -->
+                <div class="cal-weekdays">
+                    <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
+                </div>
+
+                <!-- Calendar Grid (populated by JS) -->
+                <div class="cal-grid" id="cal-grid"></div>
+            </div>
+        </section>
+
+        <!-- MEMORY BANK MODAL (Upload / View) -->
+        <div class="memory-modal-overlay" id="memory-modal-overlay">
+            <div class="memory-modal glass-card">
+                <button class="modal-close-btn" id="modal-close-btn" aria-label="Close">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M18 6L6 18M6 6l12 12"/></svg>
+                </button>
+
+                <h3 class="modal-date-label" id="modal-date-label">June 15, 2026</h3>
+
+                <!-- Upload State -->
+                <div class="modal-upload-state" id="modal-upload-state">
+                    <div class="upload-dropzone" id="upload-dropzone">
+                        <svg viewBox="0 0 24 24" width="48" height="48" class="upload-icon">
+                            <path fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/>
+                        </svg>
+                        <p class="upload-text">Tap to upload our selfie</p>
+                        <p class="upload-hint">or drag & drop an image here</p>
+                    </div>
+                    <input type="file" id="memory-file-input" accept="image/*" class="hidden-input">
+                </div>
+
+                <!-- View State (when photo exists) -->
+                <div class="modal-view-state hidden" id="modal-view-state">
+                    <div class="modal-photo-wrapper">
+                        <img id="modal-photo" src="" alt="Our memory" class="modal-photo">
+                    </div>
+                    <div class="modal-actions">
+                        <button class="modal-action-btn replace-btn" id="modal-replace-btn">
+                            <svg viewBox="0 0 24 24" width="16" height="16"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
+                            Replace
+                        </button>
+                        <button class="modal-action-btn delete-btn" id="modal-delete-btn">
+                            <svg viewBox="0 0 24 24" width="16" height="16"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                            Delete
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <p>Made with 💙 for Babe | Happy 8 Monthsary</p>
+        <p class="small-text">No distance is too far for us.</p>
+    </footer>
+
+    <!-- Supabase JS Client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <!-- Custom Logic Script -->
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,1715 @@
+/* ==========================================
+   DESIGN SYSTEM & VARIABLES
+   ========================================== */
+:root {
+    /* Color Palette (White & Blue Theme) */
+    --primary-blue: hsl(215, 75%, 55%);
+    --primary-blue-light: hsl(215, 80%, 92%);
+    --accent-blue: hsl(215, 85%, 45%);
+    --soft-blue: hsl(210, 50%, 75%);
+    --ice-blue: hsl(210, 60%, 96%);
+    
+    /* Backgrounds */
+    --bg-gradient: linear-gradient(135deg, hsl(210, 60%, 98%) 0%, hsl(215, 50%, 96%) 100%);
+    --glass-bg: rgba(255, 255, 255, 0.5);
+    --glass-border: rgba(255, 255, 255, 0.65);
+    --glass-shadow: 0 8px 32px 0 rgba(59, 130, 246, 0.08);
+    
+    /* Typography colors */
+    --text-main: hsl(215, 25%, 18%);
+    --text-muted: hsl(215, 15%, 45%);
+    --text-white: #ffffff;
+    
+    /* Fonts */
+    --font-serif: 'Playfair Display', serif;
+    --font-sans: 'Montserrat', sans-serif;
+    --font-handwriting: 'Sacramento', cursive;
+    
+    /* Transitions */
+    --transition-smooth: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+/* ==========================================
+   RESET & GLOBAL STYLES
+   ========================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+}
+
+body {
+    font-family: var(--font-sans);
+    background: var(--bg-gradient);
+    color: var(--text-main);
+    min-height: 100vh;
+    position: relative;
+    line-height: 1.6;
+}
+
+/* Background Canvas */
+#particles-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* Global Card Styling (Glassmorphism) */
+.glass-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    box-shadow: var(--glass-shadow);
+    transition: var(--transition-smooth);
+}
+
+.glass-card:hover {
+    box-shadow: 0 12px 40px 0 rgba(59, 130, 246, 0.12);
+    transform: translateY(-4px);
+}
+
+/* ==========================================
+   FLOATING MUSIC CONTROLLER
+   ========================================== */
+.music-controller {
+    position: fixed;
+    top: 24px;
+    right: 24px;
+    z-index: 100;
+}
+
+.music-btn {
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+    border: 1px solid var(--glass-border);
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.15);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    transition: var(--transition-smooth);
+    color: var(--accent-blue);
+}
+
+.music-btn:hover {
+    transform: scale(1.1);
+    background: var(--primary-blue-light);
+}
+
+.music-icon {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    transition: var(--transition-smooth);
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Music Visualizer Bar Animation */
+.visualizer {
+    display: flex;
+    align-items: flex-end;
+    gap: 2px;
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    bottom: 8px;
+    opacity: 0;
+    transition: var(--transition-smooth);
+}
+
+.music-btn.playing .visualizer {
+    opacity: 1;
+}
+
+.music-btn.playing .play-icon {
+    display: none;
+}
+
+.music-btn.playing .pause-icon {
+    display: block;
+    margin-bottom: 6px;
+}
+
+.bar {
+    width: 2px;
+    background-color: var(--accent-blue);
+    height: 3px;
+    animation: bounce 1s ease-in-out infinite alternate;
+}
+
+.bar:nth-child(2) { animation-delay: 0.2s; }
+.bar:nth-child(3) { animation-delay: 0.4s; }
+.bar:nth-child(4) { animation-delay: 0.1s; }
+
+@keyframes bounce {
+    100% { height: 12px; }
+}
+
+/* ==========================================
+   APP CONTAINER & HERO
+   ========================================== */
+.app-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.hero {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 40px 0;
+}
+
+.hero-card {
+    padding: 60px 40px;
+    width: 100%;
+    position: relative;
+}
+
+.sparkles-container {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    letter-spacing: 4px;
+}
+
+.romantic-title {
+    font-family: var(--font-serif);
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--accent-blue);
+    margin-bottom: 20px;
+    line-height: 1.2;
+}
+
+.subtitle {
+    font-size: 1.2rem;
+    color: var(--text-muted);
+    font-weight: 300;
+    margin-bottom: 40px;
+}
+
+.heart-pulse-icon {
+    animation: heartbeat 1.5s infinite alternate cubic-bezier(0.25, 0.8, 0.25, 1);
+    display: inline-block;
+}
+
+.svg-heart {
+    filter: drop-shadow(0 4px 8px rgba(59, 130, 246, 0.3));
+}
+
+@keyframes heartbeat {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.15); }
+}
+
+.scroll-down-btn {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: var(--primary-blue);
+    animation: floatDown 2s infinite;
+    cursor: pointer;
+}
+
+@keyframes floatDown {
+    0%, 100% { transform: translate(-50%, 0); }
+    50% { transform: translate(-50%, 10px); }
+}
+
+/* ==========================================
+   SECTIONS GENERAL
+   ========================================== */
+.section {
+    padding: 100px 0;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.badge {
+    background: var(--primary-blue-light);
+    color: var(--accent-blue);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    padding: 6px 16px;
+    border-radius: 30px;
+    display: inline-block;
+    margin-bottom: 12px;
+}
+
+.card-badge {
+    background: rgba(59, 130, 246, 0.08);
+    color: var(--accent-blue);
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    display: inline-block;
+    margin-bottom: 8px;
+}
+
+.section-header h2 {
+    font-family: var(--font-serif);
+    font-size: 2.25rem;
+    color: var(--text-main);
+    margin-bottom: 10px;
+}
+
+.section-header p {
+    color: var(--text-muted);
+    font-weight: 300;
+}
+
+/* ==========================================
+   LOVE COUNTER SECTION
+   ========================================== */
+.counter-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.counter-card {
+    padding: 30px 20px;
+    text-align: center;
+    border-radius: 20px;
+}
+
+.counter-card .number {
+    font-family: var(--font-serif);
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--accent-blue);
+    display: block;
+    line-height: 1;
+    margin-bottom: 8px;
+    text-shadow: 0 4px 10px rgba(59, 130, 246, 0.1);
+}
+
+.counter-card .label {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+/* ==========================================
+   LDR MAP SECTION
+   ========================================== */
+.ldr-map-card {
+    padding: 40px;
+    position: relative;
+    overflow: hidden;
+}
+
+.ldr-cities {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.city-indicator {
+    text-align: center;
+    position: relative;
+    z-index: 10;
+}
+
+.left-city { text-align: left; }
+.right-city { text-align: right; }
+
+.pulse-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background-color: var(--accent-blue);
+    display: inline-block;
+    position: relative;
+    margin-bottom: 10px;
+    box-shadow: 0 0 10px var(--accent-blue);
+}
+
+.pulse-dot::after {
+    content: '';
+    width: 100%;
+    height: 100%;
+    background-color: var(--accent-blue);
+    border-radius: 50%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: scale(1);
+    animation: pulse 2s infinite ease-out;
+}
+
+@keyframes pulse {
+    100% {
+        transform: scale(2.5);
+        opacity: 0;
+    }
+}
+
+.city-indicator h3 {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    color: var(--accent-blue);
+}
+
+.city-indicator p {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.svg-map-container {
+    width: 100%;
+    margin: 20px 0;
+}
+
+/* Path Animation */
+#flight-path {
+    animation: dashOffset 40s linear infinite;
+}
+
+@keyframes dashOffset {
+    0% { stroke-dashoffset: 1000; }
+    100% { stroke-dashoffset: 0; }
+}
+
+/* Traveler (Heart) on Path */
+#traveler {
+    offset-path: path("M 100 120 Q 400 20 700 120");
+    animation: travel 12s linear infinite;
+    offset-rotate: auto;
+}
+
+@keyframes travel {
+    0% { offset-distance: 0%; }
+    100% { offset-distance: 100%; }
+}
+
+.ldr-quote {
+    font-family: var(--font-serif);
+    font-size: 1.15rem;
+    font-style: italic;
+    text-align: center;
+    margin-top: 30px;
+    color: var(--text-main);
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    border-left: none;
+    padding-left: 0;
+    line-height: 1.6;
+}
+
+/* ==========================================
+   INTERACTIVE ENVELOPE (LOVE LETTER)
+   ========================================== */
+.envelope-container {
+    perspective: 1000px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 380px;
+    margin-top: 20px;
+}
+
+.envelope {
+    position: relative;
+    width: 340px;
+    height: 220px;
+    background: #fff;
+    border-radius: 0 0 12px 12px;
+    box-shadow: 0 10px 40px rgba(59, 130, 246, 0.12);
+    cursor: pointer;
+    transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+    transform-style: preserve-3d;
+}
+
+/* 3D Flap */
+.envelope .flap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    border-left: 170px solid transparent;
+    border-right: 170px solid transparent;
+    border-top: 130px solid var(--primary-blue);
+    border-bottom: 0 solid transparent;
+    transform-origin: top;
+    transition: transform 0.4s ease 0.3s, z-index 0.05s ease 0.3s;
+    z-index: 3;
+}
+
+.envelope .pocket {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    border-left: 170px solid var(--primary-blue-light);
+    border-right: 170px solid var(--primary-blue-light);
+    border-bottom: 110px solid var(--primary-blue-light);
+    border-top: 110px solid transparent;
+    border-radius: 0 0 12px 12px;
+    z-index: 2;
+}
+
+/* The Letter */
+.envelope .letter {
+    position: absolute;
+    bottom: 15px;
+    left: 15px;
+    width: 310px;
+    height: 190px;
+    background: #f0f7ff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    z-index: 1;
+    transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1) 0s, height 0.6s cubic-bezier(0.165, 0.84, 0.44, 1) 0s;
+    overflow: hidden;
+    border: 1px dashed var(--primary-blue);
+}
+
+.letter-inner {
+    padding: 24px;
+    height: 100%;
+    overflow-y: auto;
+}
+
+.letter-inner::-webkit-scrollbar {
+    width: 4px;
+}
+.letter-inner::-webkit-scrollbar-thumb {
+    background-color: var(--primary-blue-light);
+    border-radius: 4px;
+}
+
+.romantic-date {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    display: block;
+    text-align: right;
+    margin-bottom: 8px;
+}
+
+.letter-greeting {
+    font-family: var(--font-handwriting);
+    font-size: 1.8rem;
+    color: var(--accent-blue);
+    margin-bottom: 15px;
+}
+
+.letter-body p {
+    font-size: 0.85rem;
+    color: var(--text-main);
+    margin-bottom: 12px;
+    line-height: 1.6;
+}
+
+.letter-sig {
+    font-family: var(--font-handwriting);
+    font-size: 1.4rem;
+    color: var(--text-muted);
+    margin-top: 20px;
+    margin-bottom: 4px !important;
+}
+
+.letter-name {
+    font-weight: 600;
+    color: var(--accent-blue);
+}
+
+/* ENVELOPE OPEN STATE */
+.envelope.open {
+    transform: translateY(60px);
+}
+
+.envelope.open .flap {
+    transform: rotateX(180deg);
+    z-index: 0;
+    transition: transform 0.4s ease 0s, z-index 0.05s ease 0.15s;
+}
+
+.envelope.open .letter {
+    transform: translateY(-160px);
+    height: 320px;
+    z-index: 2;
+    transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1) 0.3s, height 0.6s cubic-bezier(0.165, 0.84, 0.44, 1) 0.3s;
+}
+
+/* Floating hearts inside envelope */
+.envelope-hearts {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 4;
+}
+
+.env-heart {
+    position: absolute;
+    color: var(--accent-blue);
+    animation: envHeartFloat 2s ease-out forwards;
+    opacity: 0;
+}
+
+@keyframes envHeartFloat {
+    0% {
+        transform: translate(-50%, -50%) scale(0.5);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    100% {
+        transform: translate(calc(-50% + var(--x)), calc(-50% - 150px)) scale(1.2) rotate(var(--r));
+        opacity: 0;
+    }
+}
+
+/* ==========================================
+   MEMORY TIMELINE (8 MONTHS OF US)
+   ========================================== */
+.timeline-container {
+    position: relative;
+    margin: 40px auto 0;
+    padding: 20px 0;
+}
+
+.timeline-line {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--primary-blue-light);
+    z-index: 0;
+    transform: translateY(-50%);
+}
+
+.timeline-slider {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    z-index: 1;
+    gap: 30px;
+}
+
+/* Polaroid-Style Memory Cards */
+.timeline-card {
+    flex: 1;
+    padding: 20px;
+    border-radius: 20px;
+    text-align: center;
+}
+
+/* Rotate slightly for aesthetic mismatch */
+.timeline-card[data-idx="1"] { transform: rotate(-2deg); }
+.timeline-card[data-idx="3"] { transform: rotate(1.5deg); }
+.timeline-card[data-idx="6"] { transform: rotate(-1.5deg); }
+.timeline-card[data-idx="8"] { transform: rotate(2deg); }
+
+.timeline-card:hover {
+    transform: scale(1.05) rotate(0deg) !important;
+}
+
+.polaroid-img {
+    background: #ffffff;
+    padding: 12px 12px 24px 12px;
+    border: 1px solid rgba(0,0,0,0.05);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+    border-radius: 4px;
+    margin-bottom: 20px;
+}
+
+.polaroid-img img {
+    width: 100%;
+    height: 240px;
+    object-fit: contain;
+    background: #000;
+    display: block;
+    border-radius: 2px;
+}
+
+.polaroid-caption {
+    font-family: var(--font-handwriting);
+    font-size: 1.6rem;
+    color: var(--text-main);
+    margin-top: 12px;
+    line-height: 1;
+}
+
+.timeline-text h3 {
+    font-family: var(--font-serif);
+    font-size: 1.15rem;
+    color: var(--accent-blue);
+    margin-bottom: 8px;
+}
+
+.timeline-text p {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+/* Placeholder styles for images */
+.placeholder-img {
+    background: linear-gradient(135deg, var(--primary-blue-light) 0%, #e8f0fe 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ==========================================
+   FOOTER
+   ========================================== */
+.footer {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--text-muted);
+}
+
+.footer p {
+    font-size: 0.9rem;
+}
+
+.footer .small-text {
+    font-size: 0.75rem;
+    margin-top: 6px;
+    letter-spacing: 1px;
+}
+
+/* ==========================================
+   MEMORY BANK SECTION
+   ========================================== */
+.memory-bank {
+    padding: 36px;
+    border-radius: 24px;
+}
+
+/* Calendar Navigation */
+.calendar-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.cal-month-label {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    color: var(--text-main);
+    user-select: none;
+}
+
+.cal-nav-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid var(--glass-border);
+    background: var(--glass-bg);
+    backdrop-filter: blur(8px);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent-blue);
+    transition: var(--transition-smooth);
+}
+
+.cal-nav-btn:hover {
+    background: var(--primary-blue-light);
+    transform: scale(1.1);
+}
+
+.cal-nav-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Memory Stats */
+.memory-stats {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-bottom: 24px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(59, 130, 246, 0.1);
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-number {
+    font-family: var(--font-serif);
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--accent-blue);
+    display: block;
+    line-height: 1;
+    margin-bottom: 4px;
+}
+
+.stat-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+/* Weekday Headers */
+.cal-weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+    margin-bottom: 6px;
+}
+
+.cal-weekdays span {
+    text-align: center;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    padding: 8px 0;
+}
+
+/* Calendar Grid */
+.cal-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+}
+
+.cal-day {
+    aspect-ratio: 1;
+    border-radius: 12px;
+    border: 1px solid transparent;
+    background: rgba(255, 255, 255, 0.3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    position: relative;
+    overflow: hidden;
+    min-height: 60px;
+}
+
+.cal-day:hover {
+    border-color: var(--primary-blue);
+    transform: scale(1.05);
+    box-shadow: 0 4px 16px rgba(59, 130, 246, 0.15);
+}
+
+.cal-day.empty {
+    background: transparent;
+    cursor: default;
+    pointer-events: none;
+}
+
+.cal-day.empty:hover {
+    border-color: transparent;
+    transform: none;
+    box-shadow: none;
+}
+
+.cal-day.future {
+    opacity: 0.35;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.cal-day.today {
+    border-color: var(--accent-blue);
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+.cal-day.has-photo {
+    border-color: var(--accent-blue);
+    background: transparent;
+    padding: 0;
+}
+
+.cal-day .day-number {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--text-main);
+    z-index: 2;
+    position: relative;
+}
+
+.cal-day.has-photo .day-number {
+    color: #fff;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+    position: absolute;
+    top: 4px;
+    right: 6px;
+    font-size: 0.65rem;
+    font-weight: 700;
+}
+
+.cal-day .day-thumb {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 11px;
+    z-index: 1;
+}
+
+.cal-day .day-add-icon {
+    font-size: 1rem;
+    color: var(--primary-blue);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    margin-top: 2px;
+}
+
+.cal-day:not(.has-photo):not(.empty):not(.future):hover .day-add-icon {
+    opacity: 1;
+}
+
+/* Before relationship start */
+.cal-day.before-start {
+    opacity: 0.15;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* ==========================================
+   MEMORY BANK MODAL
+   ========================================== */
+.memory-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 200;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    padding: 20px;
+}
+
+.memory-modal-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.memory-modal {
+    width: 100%;
+    max-width: 440px;
+    padding: 36px;
+    border-radius: 24px;
+    position: relative;
+    transform: translateY(30px) scale(0.95);
+    transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    background: rgba(255, 255, 255, 0.85);
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.memory-modal-overlay.active .memory-modal {
+    transform: translateY(0) scale(1);
+}
+
+.modal-close-btn {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    transition: var(--transition-smooth);
+}
+
+.modal-close-btn:hover {
+    background: rgba(0, 0, 0, 0.1);
+    color: var(--text-main);
+}
+
+.modal-date-label {
+    font-family: var(--font-serif);
+    font-size: 1.35rem;
+    color: var(--text-main);
+    margin-bottom: 24px;
+    text-align: center;
+}
+
+/* Upload Dropzone */
+.upload-dropzone {
+    border: 2px dashed var(--primary-blue);
+    border-radius: 16px;
+    padding: 40px 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    background: rgba(59, 130, 246, 0.03);
+}
+
+.upload-dropzone:hover,
+.upload-dropzone.dragover {
+    background: rgba(59, 130, 246, 0.08);
+    border-color: var(--accent-blue);
+    transform: scale(1.02);
+}
+
+.upload-icon {
+    color: var(--primary-blue);
+    margin-bottom: 12px;
+}
+
+.upload-text {
+    font-weight: 500;
+    color: var(--text-main);
+    font-size: 0.95rem;
+    margin-bottom: 6px;
+}
+
+.upload-hint {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+.hidden-input {
+    position: absolute;
+    width: 0;
+    height: 0;
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Photo View State */
+.modal-photo-wrapper {
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+}
+
+.modal-photo {
+    width: 100%;
+    display: block;
+    border-radius: 16px;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+}
+
+.modal-action-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 20px;
+    border-radius: 30px;
+    border: none;
+    font-family: var(--font-sans);
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+}
+
+.replace-btn {
+    background: var(--primary-blue-light);
+    color: var(--accent-blue);
+}
+
+.replace-btn:hover {
+    background: var(--primary-blue);
+    color: #fff;
+}
+
+.delete-btn {
+    background: hsl(0, 80%, 95%);
+    color: hsl(0, 70%, 50%);
+}
+
+.delete-btn:hover {
+    background: hsl(0, 70%, 50%);
+    color: #fff;
+}
+
+/* Upload Spinner */
+.upload-spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid var(--primary-blue-light);
+    border-top-color: var(--accent-blue);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin: 0 auto 12px;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* ==========================================
+   SCROLL EFFECTS (FADE-IN CLASS)
+   ========================================== */
+.fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ==========================================
+   RESPONSIVENESS
+   ========================================== */
+
+/* ---- Tablet Landscape & Small Desktop (max-width: 1024px) ---- */
+@media (max-width: 1024px) {
+    .app-container {
+        max-width: 900px;
+        padding: 0 24px;
+    }
+
+    .romantic-title {
+        font-size: 2.7rem;
+    }
+
+    .timeline-slider {
+        flex-wrap: wrap;
+        gap: 24px;
+    }
+
+    .timeline-card {
+        flex: 1 1 calc(50% - 12px);
+        max-width: calc(50% - 12px);
+    }
+}
+
+/* ---- Tablet / iPad Portrait (max-width: 900px) ---- */
+@media (max-width: 900px) {
+    .timeline-slider {
+        flex-direction: column;
+        gap: 40px;
+    }
+    .timeline-line {
+        display: none; /* Hide line when stacked vertical */
+    }
+    .timeline-card {
+        transform: rotate(0deg) !important;
+        max-width: 500px;
+        margin: 0 auto;
+        width: 100%;
+    }
+
+    .ldr-map-card {
+        padding: 30px 24px;
+    }
+
+    .ldr-quote {
+        font-size: 1.05rem;
+    }
+}
+
+/* ---- iPad & Large Tablets (max-width: 768px) ---- */
+@media (max-width: 768px) {
+    .romantic-title {
+        font-size: 2.25rem;
+    }
+
+    .subtitle {
+        font-size: 1.05rem;
+    }
+
+    .counter-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+
+    .counter-card .number {
+        font-size: 2.5rem;
+    }
+
+    .hero-card {
+        padding: 40px 20px;
+    }
+
+    .section {
+        padding: 60px 0;
+    }
+
+    .section-header h2 {
+        font-size: 1.85rem;
+    }
+
+    .ldr-cities h3 {
+        font-size: 1.2rem;
+    }
+
+    .envelope {
+        width: 310px;
+        height: 200px;
+    }
+
+    .envelope .flap {
+        border-left: 155px solid transparent;
+        border-right: 155px solid transparent;
+        border-top: 120px solid var(--primary-blue);
+    }
+
+    .envelope .pocket {
+        border-left: 155px solid var(--primary-blue-light);
+        border-right: 155px solid var(--primary-blue-light);
+        border-bottom: 100px solid var(--primary-blue-light);
+        border-top: 100px solid transparent;
+    }
+
+    .envelope .letter {
+        width: 280px;
+        height: 170px;
+    }
+
+    .envelope.open .letter {
+        height: 300px;
+    }
+
+    .polaroid-caption {
+        font-size: 1.35rem;
+    }
+
+    /* Memory Bank */
+    .memory-bank {
+        padding: 28px 20px;
+    }
+
+    .cal-month-label {
+        font-size: 1.3rem;
+    }
+
+    .cal-day {
+        min-height: 50px;
+        border-radius: 10px;
+    }
+
+    .stat-number {
+        font-size: 1.5rem;
+    }
+}
+
+/* ---- Small Tablets / Large Phones (max-width: 600px) ---- */
+@media (max-width: 600px) {
+    .app-container {
+        padding: 0 16px;
+    }
+
+    .romantic-title {
+        font-size: 1.85rem;
+    }
+
+    .subtitle {
+        font-size: 0.95rem;
+        margin-bottom: 30px;
+    }
+
+    .sparkles-container {
+        font-size: 1.25rem;
+    }
+
+    .hero-card {
+        padding: 36px 16px;
+        border-radius: 20px;
+    }
+
+    .section {
+        padding: 50px 0;
+    }
+
+    .section-header {
+        margin-bottom: 30px;
+    }
+
+    .section-header h2 {
+        font-size: 1.6rem;
+    }
+
+    .badge {
+        font-size: 0.65rem;
+        padding: 5px 12px;
+    }
+
+    .counter-card {
+        padding: 20px 12px;
+        border-radius: 16px;
+    }
+
+    .counter-card .number {
+        font-size: 2rem;
+    }
+
+    .counter-card .label {
+        font-size: 0.7rem;
+        letter-spacing: 1.5px;
+    }
+
+    .ldr-map-card {
+        padding: 24px 16px;
+        border-radius: 20px;
+    }
+
+    .city-indicator h3 {
+        font-size: 1.1rem;
+    }
+
+    .ldr-quote {
+        font-size: 0.95rem;
+    }
+
+    .envelope-container {
+        height: 340px;
+    }
+
+    .envelope {
+        width: 280px;
+        height: 180px;
+    }
+
+    .envelope .flap {
+        border-left: 140px solid transparent;
+        border-right: 140px solid transparent;
+        border-top: 110px solid var(--primary-blue);
+    }
+
+    .envelope .pocket {
+        border-left: 140px solid var(--primary-blue-light);
+        border-right: 140px solid var(--primary-blue-light);
+        border-bottom: 90px solid var(--primary-blue-light);
+        border-top: 90px solid transparent;
+    }
+
+    .envelope .letter {
+        width: 250px;
+        height: 150px;
+        left: 15px;
+        bottom: 15px;
+    }
+
+    .envelope.open .letter {
+        height: 280px;
+        transform: translateY(-140px);
+    }
+
+    .letter-inner {
+        padding: 18px;
+    }
+
+    .letter-greeting {
+        font-size: 1.5rem;
+    }
+
+    .letter-body p {
+        font-size: 0.8rem;
+    }
+
+    .timeline-card {
+        padding: 16px;
+        border-radius: 16px;
+        max-width: 100%;
+    }
+
+    .polaroid-img {
+        padding: 8px 8px 20px 8px;
+    }
+
+    .polaroid-caption {
+        font-size: 1.3rem;
+        margin-top: 10px;
+    }
+
+    .timeline-text h3 {
+        font-size: 1.05rem;
+    }
+
+    .timeline-text p {
+        font-size: 0.8rem;
+    }
+
+    .footer {
+        padding: 40px 16px;
+    }
+
+    .music-controller {
+        top: 16px;
+        right: 16px;
+    }
+
+    .music-btn {
+        width: 44px;
+        height: 44px;
+    }
+
+    /* Memory Bank */
+    .memory-bank {
+        padding: 20px 14px;
+        border-radius: 20px;
+    }
+
+    .cal-month-label {
+        font-size: 1.15rem;
+    }
+
+    .cal-nav-btn {
+        width: 36px;
+        height: 36px;
+    }
+
+    .cal-day {
+        min-height: 42px;
+        border-radius: 8px;
+    }
+
+    .cal-day .day-number {
+        font-size: 0.65rem;
+    }
+
+    .cal-grid {
+        gap: 3px;
+    }
+
+    .cal-weekdays {
+        gap: 3px;
+    }
+
+    .cal-weekdays span {
+        font-size: 0.6rem;
+        padding: 6px 0;
+    }
+
+    .memory-stats {
+        gap: 24px;
+    }
+
+    .stat-number {
+        font-size: 1.4rem;
+    }
+
+    .stat-label {
+        font-size: 0.6rem;
+    }
+
+    .memory-modal {
+        padding: 28px 20px;
+    }
+
+    .upload-dropzone {
+        padding: 30px 16px;
+    }
+}
+
+/* ---- Mobile Phones (max-width: 420px) ---- */
+@media (max-width: 420px) {
+    .app-container {
+        padding: 0 12px;
+    }
+
+    .romantic-title {
+        font-size: 1.55rem;
+    }
+
+    .subtitle {
+        font-size: 0.85rem;
+        margin-bottom: 24px;
+    }
+
+    .sparkles-container {
+        font-size: 1.1rem;
+        margin-bottom: 14px;
+    }
+
+    .hero-card {
+        padding: 30px 14px;
+        border-radius: 18px;
+    }
+
+    .heart-pulse-icon svg {
+        width: 48px;
+        height: 48px;
+    }
+
+    .section {
+        padding: 40px 0;
+    }
+
+    .section-header {
+        margin-bottom: 24px;
+    }
+
+    .section-header h2 {
+        font-size: 1.4rem;
+    }
+
+    .section-header p {
+        font-size: 0.85rem;
+    }
+
+    .counter-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+    .counter-card {
+        padding: 16px 10px;
+    }
+
+    .counter-card .number {
+        font-size: 1.8rem;
+    }
+
+    .counter-card .label {
+        font-size: 0.65rem;
+        letter-spacing: 1px;
+    }
+
+    .ldr-map-card {
+        padding: 20px 12px;
+    }
+
+    .city-indicator h3 {
+        font-size: 1rem;
+    }
+
+    .city-indicator p {
+        font-size: 0.75rem;
+    }
+
+    .svg-map-container svg {
+        height: 100px;
+    }
+
+    .ldr-quote {
+        font-size: 0.85rem;
+        margin-top: 20px;
+    }
+
+    .envelope-container {
+        height: 310px;
+    }
+
+    .envelope {
+        width: 250px;
+        height: 160px;
+    }
+
+    .envelope .flap {
+        border-left: 125px solid transparent;
+        border-right: 125px solid transparent;
+        border-top: 100px solid var(--primary-blue);
+    }
+
+    .envelope .pocket {
+        border-left: 125px solid var(--primary-blue-light);
+        border-right: 125px solid var(--primary-blue-light);
+        border-bottom: 80px solid var(--primary-blue-light);
+        border-top: 80px solid transparent;
+    }
+
+    .envelope .letter {
+        width: 220px;
+        height: 135px;
+        left: 15px;
+        bottom: 12px;
+    }
+
+    .envelope.open {
+        transform: translateY(40px);
+    }
+
+    .envelope.open .letter {
+        height: 260px;
+        transform: translateY(-120px);
+    }
+
+    .letter-inner {
+        padding: 14px;
+    }
+
+    .letter-greeting {
+        font-size: 1.35rem;
+    }
+
+    .letter-body p {
+        font-size: 0.75rem;
+        margin-bottom: 10px;
+    }
+
+    .letter-sig {
+        font-size: 1.2rem;
+    }
+
+    .timeline-card {
+        padding: 14px;
+    }
+
+    .polaroid-caption {
+        font-size: 1.2rem;
+    }
+
+    .timeline-text h3 {
+        font-size: 0.95rem;
+    }
+
+    .footer p {
+        font-size: 0.8rem;
+    }
+
+    .footer .small-text {
+        font-size: 0.65rem;
+    }
+
+    /* Memory Bank */
+    .memory-bank {
+        padding: 16px 10px;
+    }
+
+    .cal-month-label {
+        font-size: 1rem;
+    }
+
+    .cal-day {
+        min-height: 36px;
+        border-radius: 6px;
+    }
+
+    .cal-day .day-number {
+        font-size: 0.6rem;
+    }
+
+    .cal-day.has-photo .day-number {
+        font-size: 0.55rem;
+        top: 2px;
+        right: 3px;
+    }
+
+    .cal-grid {
+        gap: 2px;
+    }
+
+    .cal-weekdays {
+        gap: 2px;
+    }
+
+    .cal-weekdays span {
+        font-size: 0.55rem;
+        letter-spacing: 0;
+    }
+
+    .memory-modal {
+        padding: 24px 16px;
+        border-radius: 20px;
+    }
+
+    .modal-date-label {
+        font-size: 1.1rem;
+    }
+}
+
+/* ---- Very Small Phones (max-width: 340px) ---- */
+@media (max-width: 340px) {
+    .romantic-title {
+        font-size: 1.3rem;
+    }
+
+    .subtitle {
+        font-size: 0.8rem;
+    }
+
+    .hero-card {
+        padding: 24px 10px;
+    }
+
+    .counter-card .number {
+        font-size: 1.5rem;
+    }
+
+    .envelope {
+        width: 220px;
+        height: 145px;
+    }
+
+    .envelope .flap {
+        border-left: 110px solid transparent;
+        border-right: 110px solid transparent;
+        border-top: 90px solid var(--primary-blue);
+    }
+
+    .envelope .pocket {
+        border-left: 110px solid var(--primary-blue-light);
+        border-right: 110px solid var(--primary-blue-light);
+        border-bottom: 72px solid var(--primary-blue-light);
+        border-top: 72px solid transparent;
+    }
+
+    .envelope .letter {
+        width: 190px;
+        height: 120px;
+        left: 15px;
+        bottom: 12px;
+    }
+
+    .envelope.open .letter {
+        height: 240px;
+        transform: translateY(-110px);
+    }
+}
