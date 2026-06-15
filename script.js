@@ -325,12 +325,13 @@ document.addEventListener('DOMContentLoaded', () => {
             if (error) throw error;
 
             const photos = {};
+            const loadTime = Date.now(); // Cache buster
             data.forEach(row => {
                 // Build the public URL from the storage path
                 const { data: urlData } = supabase.storage
                     .from(STORAGE_BUCKET)
                     .getPublicUrl(row.photo_path);
-                photos[row.date_key] = urlData.publicUrl;
+                photos[row.date_key] = urlData.publicUrl + '?t=' + loadTime;
             });
 
             return photos;
