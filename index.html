@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy 8 Months, Babe!</title>
+    <title>Happy 9 Months, Babe!</title>
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Sacramento&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;400;500;600&family=Dancing+Script:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -17,7 +17,8 @@
     <!-- Floating Music Controller -->
     <div class="music-controller" id="music-controller">
         <audio id="bg-music" loop autoplay>
-            <source src="assets/Shelly - Steeeam.mp3" type="audio/mpeg">
+            <!-- ILLENIUM & Sasha Alex Sloan - U & Me -->
+            <source src="assets/ILLENIUM and Sasha Alex Sloan- U & Me (Official Audio).mp3" type="audio/mpeg">
             Your browser does not support the audio element.
         </audio>
         <button id="music-btn" aria-label="Toggle Music" class="music-btn">
@@ -39,12 +40,12 @@
     <!-- MAIN CONTAINER -->
     <main class="app-container">
         
-        <!-- HERO SECTION -->
+        <!-- 1. HERO SECTION -->
         <header class="hero" id="hero-section">
             <div class="glass-card hero-card fade-in">
-                <div class="sparkles-container">✨ 💙 ✨</div>
-                <h1 class="romantic-title">Happy 8 Months, Babe!</h1>
-                <p class="subtitle">Every second apart has made me love you more.</p>
+                <div class="sparkles-container">🌙 💜 ✨</div>
+                <h1 class="romantic-title">Happy 9 Months, Babe!</h1>
+                <p class="subtitle">Nine months of choosing each other, and I'd do it all over again.</p>
                 <div class="heart-pulse-icon">
                     <svg viewBox="0 0 24 24" width="64" height="64" class="svg-heart">
                         <path fill="var(--accent-blue)" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
@@ -58,7 +59,7 @@
             </div>
         </header>
 
-        <!-- COUNTDOWN / COUNTUP SECTION -->
+        <!-- 2. COUNTDOWN / COUNTUP SECTION -->
         <section class="section" id="counter-section">
             <div class="section-header fade-in">
                 <span class="badge">Our Timeline</span>
@@ -86,7 +87,7 @@
             </div>
         </section>
 
-        <!-- LDR MAP SECTION -->
+        <!-- 3. LDR MAP SECTION -->
         <section class="section" id="ldr-section">
             <div class="glass-card ldr-map-card fade-in">
                 <div class="ldr-cities">
@@ -107,9 +108,9 @@
                     <svg viewBox="0 0 800 200" width="100%" height="150" class="connection-svg">
                         <defs>
                             <linearGradient id="line-grad" x1="0%" y1="0%" x2="100%" y2="0%">
-                                <stop offset="0%" stop-color="var(--primary-pink)" />
-                                <stop offset="50%" stop-color="var(--accent-red)" />
-                                <stop offset="100%" stop-color="var(--primary-pink)" />
+                                <stop offset="0%" stop-color="var(--soft-blue)" />
+                                <stop offset="50%" stop-color="var(--accent-blue)" />
+                                <stop offset="100%" stop-color="var(--soft-blue)" />
                             </linearGradient>
                             <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
                                 <feGaussianBlur stdDeviation="5" result="blur" />
@@ -119,7 +120,7 @@
                         <!-- Connecting Arc -->
                         <path id="flight-path" d="M 100 120 Q 400 20 700 120" fill="none" stroke="url(#line-grad)" stroke-width="4" stroke-linecap="round" stroke-dasharray="8 6" />
                         
-                        <!-- Glowing plane/heart traversing path -->
+                        <!-- Glowing heart traversing path -->
                         <g id="traveler">
                             <path d="M-10,-10 L10,-10 L10,10 L-10,10 Z" fill="none" />
                             <path fill="var(--accent-blue)" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" transform="scale(0.8) translate(-12, -16)" filter="url(#glow)" />
@@ -133,7 +134,82 @@
             </div>
         </section>
 
-        <!-- INTERACTIVE ENVELOPE / LOVE LETTER SECTION -->
+        <!-- 4. 9 REASONS I LOVE YOU CAROUSEL -->
+        <section class="section" id="reasons-section">
+            <div class="section-header fade-in">
+                <span class="badge">Every Month</span>
+                <h2>9 Reasons I Love You</h2>
+                <p>One reason for every month we've been together.</p>
+            </div>
+            
+            <div class="reasons-carousel fade-in" id="reasons-carousel">
+                <button class="carousel-nav-btn prev" id="reasons-prev" aria-label="Previous">
+                    <svg viewBox="0 0 24 24" width="20" height="20"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M15 18l-6-6 6-6"/></svg>
+                </button>
+                <div class="reasons-track" id="reasons-track">
+                    <div class="reason-card glass-card">
+                        <div class="reason-icon">🌟</div>
+                        <span class="reason-month">Month 1</span>
+                        <h3 class="reason-title">Believing in Us</h3>
+                        <p class="reason-text">You made me believe that love across miles is real and worth fighting for.</p>
+                    </div>
+                    <div class="reason-card glass-card">
+                        <div class="reason-icon">🎵</div>
+                        <span class="reason-month">Month 2</span>
+                        <h3 class="reason-title">Your Voice</h3>
+                        <p class="reason-text">Your voice on late-night calls became my favorite lullaby.</p>
+                    </div>
+                    <div class="reason-card glass-card">
+                        <div class="reason-icon">🤗</div>
+                        <span class="reason-month">Month 3</span>
+                        <h3 class="reason-title">Never Alone</h3>
+                        <p class="reason-text">You never let the distance make me feel alone.</p>
+                    </div>
+                    <div class="reason-card glass-card">
+                        <div class="reason-icon">💪</div>
+                        <span class="reason-month">Month 4</span>
+                        <h3 class="reason-title">Choosing the Hard</h3>
+                        <p class="reason-text">You taught me that real love means choosing each other even when it's hard.</p>
+                    </div>
+                    <div class="reason-card glass-card">
+                        <div class="reason-icon">🐉</div>
+                        <span class="reason-month">Month 5</span>
+                        <h3 class="reason-title">Your Fire</h3>
+                        <p class="reason-text">Your stubbornness pushes me to be a better man for you.</p>
+                    </div>
+                    <div class="reason-card glass-card">
+                        <div class="reason-icon">🥰</div>
+                        <span class="reason-month">Month 6</span>
+                        <h3 class="reason-title">Lambing Hours</h3>
+                        <p class="reason-text">The way you ask for lambing melts my heart every single time.</p>
+                    </div>
+                    <div class="reason-card glass-card">
+                        <div class="reason-icon">🏠</div>
+                        <span class="reason-month">Month 7</span>
+                        <h3 class="reason-title">My Safe Space</h3>
+                        <p class="reason-text">You are my safe space in a world full of chaos.</p>
+                    </div>
+                    <div class="reason-card glass-card">
+                        <div class="reason-icon">⛈️</div>
+                        <span class="reason-month">Month 8</span>
+                        <h3 class="reason-title">Storm Proof</h3>
+                        <p class="reason-text">We proved that our love is resilient enough to survive any storm.</p>
+                    </div>
+                    <div class="reason-card glass-card">
+                        <div class="reason-icon">💜</div>
+                        <span class="reason-month">Month 9</span>
+                        <h3 class="reason-title">Always Choosing You</h3>
+                        <p class="reason-text">I am so proud to be yours — and I will keep choosing you every single day.</p>
+                    </div>
+                </div>
+                <button class="carousel-nav-btn next" id="reasons-next" aria-label="Next">
+                    <svg viewBox="0 0 24 24" width="20" height="20"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M9 18l6-6-6-6"/></svg>
+                </button>
+                <div class="carousel-dots" id="carousel-dots"></div>
+            </div>
+        </section>
+
+        <!-- 5. INTERACTIVE ENVELOPE / LOVE LETTER SECTION -->
         <section class="section" id="letter-section">
             <div class="section-header fade-in">
                 <span class="badge">For Your Eyes Only</span>
@@ -149,13 +225,14 @@
                     <div class="letter" id="letter">
                         <div class="letter-inner">
                             <div class="letter-header">
-                                <span class="romantic-date">June 15, 2026</span>
-                                <h3 class="letter-greeting">Dearest Babe,</h3>
+                                <span class="romantic-date">July 15, 2026</span>
+                                <h3 class="letter-greeting">My Baby,</h3>
                             </div>
                             <div class="letter-body">
-                                <p>Can you believe it's already been eight months since we began this journey? Although the miles keep us physically apart, they have only drawn our hearts closer together.</p>
-                                <p>I cherish every late-night phone call, every video date where we cooked "together," and all the moments we've shared, despite the screens in front of us. Your laughter is my favorite sound, and knowing you are in my life makes every obstacle worth facing.</p>
-                                <p>Happy 8th Monthsary, babe. Thank you for being the wonderful, beautiful, and loving person that you are. I count down the days until we no longer have to say goodbye to a screen, but can finally hold each other close.</p>
+                                <p>Happy monthsary, my baby.</p>
+                                <p>When I look back at us, especially over this past month, I just feel an overwhelming sense of pride and gratitude. Being long-distance is already heavy on its own, but recently we had to face some really uncomfortable conversations and navigate through things that tested us. It wasn't easy, and there were moments where my heart felt so heavy. But instead of letting fear or our differences pull us apart, we chose to face the hard truths together. We proved that what we have is resilient enough to survive the storms, as long as we keep being completely transparent with each other.</p>
+                                <p>You are not just my girlfriend; you are my best friend, my safe space, and the person I feel permanently anchored to. I love every single side of you. I love the way you talk, I love how sweet you get when you ask for lambing, and I secretly love how you constantly crave my attention. Please never be afraid to show me your unfiltered self—you can be crazy, you can be a dragon when you are stubborn, and I am still never going to walk away.</p>
+                                <p>Knowing that you fall asleep holding onto that pillow with my t-shirt and my perfume makes all these miles between us feel a little bit smaller. Until the day comes when I can finally wrap my actual arms around you instead of just texting you through a screen, I want you to remember one thing: I choose you. I choose you in the happy moments, I choose you during the heavy conversations, and I will keep choosing you every single day that comes after. Happy monthsary, my love. I am so proud to be yours.</p>
                                 <p class="letter-sig">Forever and always yours,</p>
                                 <p class="letter-name">Heco</p>
                             </div>
@@ -166,7 +243,39 @@
             </div>
         </section>
 
-        <!-- MEMORY TIMELINE (TIMELESS PROMISES) -->
+        <!-- 6. HOW WELL DO YOU KNOW ME? QUIZ -->
+        <section class="section" id="quiz-section">
+            <div class="section-header fade-in">
+                <span class="badge">Fun Challenge</span>
+                <h2>How Well Do You Know Me?</h2>
+                <p>9 questions — one for every month together. Let's see your score!</p>
+            </div>
+            
+            <div class="quiz-container glass-card fade-in" id="quiz-container">
+                <!-- Quiz Active State -->
+                <div id="quiz-active">
+                    <div class="quiz-progress">
+                        <div class="quiz-progress-fill" id="quiz-progress-fill"></div>
+                    </div>
+                    <div class="quiz-question-number" id="quiz-question-number">Question 1 of 9</div>
+                    <h3 class="quiz-question-text" id="quiz-question-text"></h3>
+                    <div class="quiz-options" id="quiz-options"></div>
+                    <div class="quiz-feedback hidden" id="quiz-feedback"></div>
+                </div>
+                
+                <!-- Result Screen (hidden initially) -->
+                <div class="quiz-result hidden" id="quiz-result">
+                    <div class="quiz-score-circle">
+                        <span class="quiz-score" id="quiz-score">0</span>
+                        <span class="quiz-score-total">/9</span>
+                    </div>
+                    <p class="quiz-message" id="quiz-message"></p>
+                    <button class="quiz-retry-btn" id="quiz-retry">Try Again 💜</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. MEMORY TIMELINE (TIMELESS PROMISES) -->
         <section class="section" id="timeline-section">
             <div class="section-header fade-in">
                 <span class="badge">Our Love</span>
@@ -181,46 +290,82 @@
                     <!-- Card 1 -->
                     <div class="timeline-card glass-card" data-idx="1">
                         <div class="polaroid-img">
-                            <img src="assets/Screenshot 2026-06-15 215730.png" alt="My Constant" class="placeholder-img" id="img-m1">
-                            <div class="polaroid-caption">💙</div>
+                            <img src="assets/photo-1.png" alt="Surviving Storms" class="placeholder-img" id="timeline-img-1">
+                            <div class="polaroid-caption">💜</div>
                         </div>
                         <div class="timeline-text">
-                            <span class="card-badge">My Constant</span>
-                            <h3>The Always Approach</h3>
-                            <p>You are the best decision I’ve ever made. Every day, I choose you—not just for the big moments, but for all the small, quiet ones in between. My love for you only grows deeper, and I’m so grateful to have you by my side.</p>
+                            <span class="card-badge">Surviving Storms</span>
+                            <h3>We Chose the Hard Truths</h3>
+                            <p>We had uncomfortable conversations that tested everything. My heart felt heavy, but instead of running, we faced it together. We proved that what we have is strong enough to survive any storm — as long as we stay completely honest with each other.</p>
                         </div>
                     </div>
 
                     <!-- Card 2 -->
                     <div class="timeline-card glass-card" data-idx="6">
                         <div class="polaroid-img">
-                            <img src="assets/Screenshot 2026-06-15 215742.png" alt="Us Against the World" class="placeholder-img" id="img-m6">
-                            <div class="polaroid-caption">♾️</div>
+                            <img src="assets/photo-2.png" alt="My Safe Space" class="placeholder-img" id="timeline-img-2">
+                            <div class="polaroid-caption">🏠</div>
                         </div>
                         <div class="timeline-text">
-                            <span class="card-badge">Us Against the World</span>
-                            <h3>Growing Together</h3>
-                            <p>No matter what life throws our way, I know we can handle it because we’re a team. You are my greatest support, my best friend, and my home. I love you more than words can say, and I can't wait to keep building our future together.</p>
+                            <span class="card-badge">My Safe Space</span>
+                            <h3>More Than a Girlfriend</h3>
+                            <p>You are not just my girlfriend — you are my best friend, my safe space, and the person I feel permanently anchored to. I love every single side of you: your sweetness, your dragon mode, and everything in between. I am never walking away.</p>
                         </div>
                     </div>
 
                     <!-- Card 3 -->
                     <div class="timeline-card glass-card" data-idx="8">
                         <div class="polaroid-img">
-                            <img src="assets/Screenshot 2026-06-15 215714.png" alt="Simply, You" class="placeholder-img" id="img-m8">
-                            <div class="polaroid-caption">✨</div>
+                            <img src="assets/photo-3.png" alt="Always Choosing You" class="placeholder-img" id="timeline-img-3">
+                            <div class="polaroid-caption">♾️</div>
                         </div>
                         <div class="timeline-text">
-                            <span class="card-badge">Simply, You</span>
-                            <h3>Forever & Now</h3>
-                            <p>I fall in love with you all over again every single day. Thank you for being exactly who you are and for letting me love you. You bring so much light into my life, and I am so lucky to call you mine.</p>
+                            <span class="card-badge">Always Choosing You</span>
+                            <h3>Every Single Day</h3>
+                            <p>I choose you in the happy moments, I choose you during the heavy conversations, and I will keep choosing you every single day that comes after. Until I can finally wrap my arms around you for real — know that my heart is already there.</p>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- MEMORY BANK SECTION -->
+        <!-- 8. MEMORY SLIDESHOW -->
+        <section class="section" id="slideshow-section">
+            <div class="section-header fade-in">
+                <span class="badge">Relive It</span>
+                <h2>Our Moments Together</h2>
+                <p>A slideshow of our memories from this past month.</p>
+            </div>
+            
+            <div class="slideshow-wrapper glass-card fade-in" id="slideshow-wrapper">
+                <!-- Main Display -->
+                <div class="slideshow-display" id="slideshow-display">
+                    <div class="slideshow-date-overlay" id="slideshow-date-overlay"></div>
+                </div>
+                <!-- Controls -->
+                <div class="slideshow-controls" id="slideshow-controls">
+                    <button class="slideshow-btn" id="slideshow-prev" aria-label="Previous Photo">
+                        <svg viewBox="0 0 24 24" width="20" height="20"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M15 18l-6-6 6-6"/></svg>
+                    </button>
+                    <button class="slideshow-btn slideshow-play-btn" id="slideshow-play" aria-label="Play/Pause">
+                        <svg class="ss-play-icon" viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M8 5v14l11-7z"/></svg>
+                        <svg class="ss-pause-icon hidden" viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+                    </button>
+                    <button class="slideshow-btn" id="slideshow-next" aria-label="Next Photo">
+                        <svg viewBox="0 0 24 24" width="20" height="20"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M9 18l6-6-6-6"/></svg>
+                    </button>
+                </div>
+                <!-- Thumbnails -->
+                <div class="slideshow-thumbs" id="slideshow-thumbs"></div>
+                <!-- Empty State -->
+                <div class="slideshow-empty hidden" id="slideshow-empty">
+                    <p>📸 No memories from this month yet</p>
+                    <p class="small-text">Start adding them in the Memory Bank below!</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 9. MEMORY BANK SECTION -->
         <section class="section" id="memory-section">
             <div class="section-header fade-in">
                 <span class="badge">Our Memories</span>
@@ -278,7 +423,7 @@
                             <path fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/>
                         </svg>
                         <p class="upload-text">Tap to upload our selfie</p>
-                        <p class="upload-hint">or drag & drop an image here</p>
+                        <p class="upload-hint">or drag &amp; drop an image here</p>
                     </div>
                     <input type="file" id="memory-file-input" accept="image/*" class="hidden-input">
                 </div>
@@ -306,7 +451,7 @@
 
     <!-- FOOTER -->
     <footer class="footer">
-        <p>I love you babe</p>
+        <p>I love you babe 💜</p>
         <p class="small-text">No distance is too far for us.</p>
     </footer>
 

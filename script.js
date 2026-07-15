@@ -89,7 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Heart path formula centered at (this.x, this.y)
             ctx.save();
             ctx.globalAlpha = this.opacity;
-            ctx.fillStyle = 'rgba(59, 130, 246, ' + this.opacity + ')';
+            ctx.fillStyle = 'rgba(140, 40, 189, ' + this.opacity + ')';
             ctx.beginPath();
             const x = this.x;
             const y = this.y;
@@ -215,7 +215,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function createEnvHeart() {
         const heartEl = document.createElement('div');
         heartEl.className = 'env-heart';
-        heartEl.innerHTML = '💙';
+        heartEl.innerHTML = '💜';
         
         // Random horizontal travel range (-80px to 80px)
         const randX = (Math.random() * 160 - 80) + 'px';
@@ -773,6 +773,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const photoUrl = await uploadPhotoToSupabase(selectedDate, file);
         if (photoUrl) {
             renderCalendar();
+            populateTimelinePhotos();
             // Show the photo in the modal
             modalUploadState.classList.add('hidden');
             modalViewState.classList.remove('hidden');
@@ -791,6 +792,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const success = await deletePhotoFromSupabase(selectedDate);
             if (success) {
                 renderCalendar();
+                populateTimelinePhotos();
                 closeModal();
             }
         }
@@ -803,9 +805,461 @@ document.addEventListener('DOMContentLoaded', () => {
 
         photosCache = await loadPhotosFromSupabase();
         renderCalendar();
+        // Initialize slideshow after photos are loaded
+        initSlideshow();
+        // Populate timeline cards with random memory bank photos
+        populateTimelinePhotos();
+    }
+
+    // Pick 3 random photos from the Memory Bank and set them on timeline cards
+    function populateTimelinePhotos() {
+        const allKeys = Object.keys(photosCache);
+        if (allKeys.length === 0) return;
+
+        // Shuffle all available memory bank keys
+        const shuffled = [...allKeys].sort(() => Math.random() - 0.5);
+
+        const timelineImgs = [
+            document.getElementById('timeline-img-1'),
+            document.getElementById('timeline-img-2'),
+            document.getElementById('timeline-img-3')
+        ];
+
+        // Populate all 3 cards, wrapping around if there are fewer than 3 photos in the Memory Bank
+        timelineImgs.forEach((img, i) => {
+            if (img) {
+                const key = shuffled[i % shuffled.length];
+                if (photosCache[key]) {
+                    img.src = photosCache[key];
+                }
+            }
+        });
     }
 
     initMemoryBank();
+
+
+    // ==========================================
+    // 7. REASONS I LOVE YOU — CAROUSEL
+    // ==========================================
+    const reasonsTrack = document.getElementById('reasons-track');
+    const reasonsPrev = document.getElementById('reasons-prev');
+    const reasonsNext = document.getElementById('reasons-next');
+    const carouselDotsContainer = document.getElementById('carousel-dots');
+
+    if (reasonsTrack) {
+        const cards = reasonsTrack.querySelectorAll('.reason-card');
+        const totalCards = cards.length;
+        let currentCard = 0;
+        let autoAdvanceTimer = null;
+
+        // Create dots
+        for (let i = 0; i < totalCards; i++) {
+            const dot = document.createElement('button');
+            dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+            dot.setAttribute('aria-label', 'Go to reason ' + (i + 1));
+            dot.addEventListener('click', () => scrollToCard(i));
+            carouselDotsContainer.appendChild(dot);
+        }
+
+        function scrollToCard(index) {
+            currentCard = Math.max(0, Math.min(index, totalCards - 1));
+            const card = cards[currentCard];
+            const trackRect = reasonsTrack.getBoundingClientRect();
+            const cardRect = card.getBoundingClientRect();
+            const scrollLeft = card.offsetLeft - reasonsTrack.offsetLeft - (trackRect.width / 2) + (cardRect.width / 2);
+            reasonsTrack.scrollTo({ left: scrollLeft, behavior: 'smooth' });
+            updateDots();
+            resetAutoAdvance();
+        }
+
+        function updateDots() {
+            const dots = carouselDotsContainer.querySelectorAll('.carousel-dot');
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === currentCard);
+            });
+        }
+
+        // Detect current card from scroll position
+        reasonsTrack.addEventListener('scroll', () => {
+            const scrollCenter = reasonsTrack.scrollLeft + reasonsTrack.clientWidth / 2;
+            let closest = 0;
+            let minDist = Infinity;
+            cards.forEach((card, i) => {
+                const cardCenter = card.offsetLeft - reasonsTrack.offsetLeft + card.offsetWidth / 2;
+                const dist = Math.abs(scrollCenter - cardCenter);
+                if (dist < minDist) {
+                    minDist = dist;
+                    closest = i;
+                }
+            });
+            if (closest !== currentCard) {
+                currentCard = closest;
+                updateDots();
+            }
+        });
+
+        reasonsPrev.addEventListener('click', () => scrollToCard(currentCard - 1));
+        reasonsNext.addEventListener('click', () => scrollToCard(currentCard + 1));
+
+        // Auto-advance every 5 seconds
+        function startAutoAdvance() {
+            autoAdvanceTimer = setInterval(() => {
+                const next = (currentCard + 1) % totalCards;
+                scrollToCard(next);
+            }, 5000);
+        }
+
+        function resetAutoAdvance() {
+            clearInterval(autoAdvanceTimer);
+            startAutoAdvance();
+        }
+
+        // Pause on hover/touch
+        reasonsTrack.addEventListener('mouseenter', () => clearInterval(autoAdvanceTimer));
+        reasonsTrack.addEventListener('mouseleave', startAutoAdvance);
+        reasonsTrack.addEventListener('touchstart', () => clearInterval(autoAdvanceTimer), { passive: true });
+        reasonsTrack.addEventListener('touchend', () => {
+            clearInterval(autoAdvanceTimer);
+            setTimeout(startAutoAdvance, 3000);
+        });
+
+        startAutoAdvance();
+    }
+
+
+    // ==========================================
+    // 8. HOW WELL DO YOU KNOW ME — QUIZ
+    // ==========================================
+    const quizQuestions = [
+        {
+            question: "What month did we become official?",
+            options: ["September 2025", "October 2025", "November 2025", "December 2025"],
+            correct: 1
+        },
+        {
+            question: "What's my favorite way to spend time with you?",
+            options: ["Video calls", "Playing games together", "Watching movies together", "Late-night voice calls"],
+            correct: 0
+        },
+        {
+            question: "What do I love most about you?",
+            options: ["Your smile", "Your laugh", "Your stubbornness", "Everything"],
+            correct: 3
+        },
+        {
+            question: "What's my go-to term of endearment for you?",
+            options: ["Babe", "Baby", "My Love", "Mahal"],
+            correct: 1
+        },
+        {
+            question: "What helps you fall asleep when you miss me?",
+            options: ["My playlist", "The pillow with my shirt", "Our photos", "My voice messages"],
+            correct: 1
+        },
+        {
+            question: "What's the hardest part of our LDR?",
+            options: ["Time zones", "Not being able to hug", "Missing important days", "All of the above"],
+            correct: 3
+        },
+        {
+            question: "What's my love language?",
+            options: ["Words of Affirmation", "Quality Time", "Physical Touch", "Acts of Service"],
+            correct: 0
+        },
+        {
+            question: "What do I secretly love about you?",
+            options: ["Your dragon mode", "Your clinginess", "Your jealous side", "All of the above"],
+            correct: 3
+        },
+        {
+            question: "What's my promise to you?",
+            options: ["To visit every month", "To never walk away", "To buy you everything", "To always agree with you"],
+            correct: 1
+        }
+    ];
+
+    const quizActive = document.getElementById('quiz-active');
+    const quizResult = document.getElementById('quiz-result');
+    const quizProgressFill = document.getElementById('quiz-progress-fill');
+    const quizQuestionNumber = document.getElementById('quiz-question-number');
+    const quizQuestionText = document.getElementById('quiz-question-text');
+    const quizOptionsContainer = document.getElementById('quiz-options');
+    const quizFeedback = document.getElementById('quiz-feedback');
+    const quizScoreEl = document.getElementById('quiz-score');
+    const quizMessageEl = document.getElementById('quiz-message');
+    const quizRetryBtn = document.getElementById('quiz-retry');
+
+    let quizCurrentQuestion = 0;
+    let quizScore = 0;
+    let quizAnswered = false;
+
+    function renderQuizQuestion() {
+        if (quizCurrentQuestion >= quizQuestions.length) {
+            showQuizResult();
+            return;
+        }
+
+        const q = quizQuestions[quizCurrentQuestion];
+        quizAnswered = false;
+
+        // Update progress
+        quizProgressFill.style.width = ((quizCurrentQuestion / quizQuestions.length) * 100) + '%';
+        quizQuestionNumber.textContent = `Question ${quizCurrentQuestion + 1} of ${quizQuestions.length}`;
+        quizQuestionText.textContent = q.question;
+
+        // Hide feedback
+        quizFeedback.classList.add('hidden');
+        quizFeedback.className = 'quiz-feedback hidden';
+
+        // Render options
+        quizOptionsContainer.innerHTML = '';
+        q.options.forEach((option, i) => {
+            const btn = document.createElement('button');
+            btn.className = 'quiz-option';
+            btn.textContent = option;
+            btn.addEventListener('click', () => handleQuizAnswer(i));
+            quizOptionsContainer.appendChild(btn);
+        });
+    }
+
+    function handleQuizAnswer(selectedIndex) {
+        if (quizAnswered) return;
+        quizAnswered = true;
+
+        const q = quizQuestions[quizCurrentQuestion];
+        const options = quizOptionsContainer.querySelectorAll('.quiz-option');
+
+        // Disable all options
+        options.forEach(opt => opt.classList.add('disabled'));
+
+        // Mark correct
+        options[q.correct].classList.add('correct');
+
+        if (selectedIndex === q.correct) {
+            quizScore++;
+            quizFeedback.textContent = '✨ Correct! You know me so well!';
+            quizFeedback.className = 'quiz-feedback correct-feedback';
+        } else {
+            options[selectedIndex].classList.add('wrong');
+            quizFeedback.textContent = '😅 Not quite! The answer was: ' + q.options[q.correct];
+            quizFeedback.className = 'quiz-feedback wrong-feedback';
+        }
+
+        quizFeedback.classList.remove('hidden');
+
+        // Auto-advance after delay
+        setTimeout(() => {
+            quizCurrentQuestion++;
+            renderQuizQuestion();
+        }, 2000);
+    }
+
+    function showQuizResult() {
+        quizActive.classList.add('hidden');
+        quizResult.classList.remove('hidden');
+        quizProgressFill.style.width = '100%';
+
+        quizScoreEl.textContent = quizScore;
+
+        let message = '';
+        if (quizScore === 9) {
+            message = 'You know me better than I know myself! 💜';
+        } else if (quizScore >= 7) {
+            message = 'Almost perfect! You really pay attention 🥹';
+        } else if (quizScore >= 5) {
+            message = 'Not bad! But we have more to learn about each other 😘';
+        } else {
+            message = 'Looks like we need more late-night calls! 😂💜';
+        }
+        quizMessageEl.textContent = message;
+    }
+
+    function resetQuiz() {
+        quizCurrentQuestion = 0;
+        quizScore = 0;
+        quizAnswered = false;
+        quizActive.classList.remove('hidden');
+        quizResult.classList.add('hidden');
+        renderQuizQuestion();
+    }
+
+    if (quizRetryBtn) {
+        quizRetryBtn.addEventListener('click', resetQuiz);
+    }
+
+    // Initialize quiz
+    renderQuizQuestion();
+
+
+    // ==========================================
+    // 9. MEMORY SLIDESHOW
+    // ==========================================
+    const slideshowDisplay = document.getElementById('slideshow-display');
+    const slideshowDateOverlay = document.getElementById('slideshow-date-overlay');
+    const slideshowControls = document.getElementById('slideshow-controls');
+    const slideshowPrev = document.getElementById('slideshow-prev');
+    const slideshowNext = document.getElementById('slideshow-next');
+    const slideshowPlayBtn = document.getElementById('slideshow-play');
+    const slideshowThumbs = document.getElementById('slideshow-thumbs');
+    const slideshowEmpty = document.getElementById('slideshow-empty');
+
+    let slideshowPhotos = []; // Array of { dateKey, url }
+    let slideshowIndex = 0;
+    let slideshowTimer = null;
+    let slideshowPlaying = true;
+
+    // Get photos from the past monthsary period (16th to 15th)
+    function getSlideshowPhotos() {
+        const photos = [];
+        // Current monthsary period: June 16 -> July 15
+        // The monthsary is on the 16th of each month
+        const now = new Date();
+        const currentMonth = now.getMonth();
+        const currentYear = now.getFullYear();
+
+        // Period start: previous month 16th
+        let periodStart, periodEnd;
+        if (now.getDate() >= 16) {
+            // We're past the 16th, period is this month's 16th to next month's 15th
+            periodStart = new Date(currentYear, currentMonth, 16);
+            periodEnd = new Date(currentYear, currentMonth + 1, 15);
+        } else {
+            // Before the 16th, period is last month's 16th to this month's 15th
+            periodStart = new Date(currentYear, currentMonth - 1, 16);
+            periodEnd = new Date(currentYear, currentMonth, 15);
+        }
+
+        // Filter photosCache for dates in this range
+        const sortedKeys = Object.keys(photosCache).sort();
+        sortedKeys.forEach(key => {
+            const d = new Date(key + 'T00:00:00');
+            if (d >= periodStart && d <= periodEnd) {
+                photos.push({ dateKey: key, url: photosCache[key] });
+            }
+        });
+
+        return photos;
+    }
+
+    function initSlideshow() {
+        slideshowPhotos = getSlideshowPhotos();
+
+        if (slideshowPhotos.length === 0) {
+            // Show empty state
+            slideshowDisplay.style.display = 'none';
+            slideshowControls.style.display = 'none';
+            slideshowThumbs.style.display = 'none';
+            slideshowEmpty.classList.remove('hidden');
+            return;
+        }
+
+        // Show slideshow, hide empty
+        slideshowDisplay.style.display = '';
+        slideshowControls.style.display = '';
+        slideshowThumbs.style.display = '';
+        slideshowEmpty.classList.add('hidden');
+
+        // Create image elements
+        slideshowDisplay.querySelectorAll('.slideshow-img').forEach(img => img.remove());
+        slideshowPhotos.forEach((photo, i) => {
+            const img = document.createElement('img');
+            img.className = 'slideshow-img' + (i === 0 ? ' active' : '');
+            img.src = photo.url;
+            img.alt = 'Memory from ' + photo.dateKey;
+            img.loading = 'lazy';
+            slideshowDisplay.insertBefore(img, slideshowDateOverlay);
+        });
+
+        // Create thumbnails
+        slideshowThumbs.innerHTML = '';
+        slideshowPhotos.forEach((photo, i) => {
+            const thumb = document.createElement('img');
+            thumb.className = 'slideshow-thumb' + (i === 0 ? ' active' : '');
+            thumb.src = photo.url;
+            thumb.alt = 'Thumbnail ' + photo.dateKey;
+            thumb.loading = 'lazy';
+            thumb.addEventListener('click', () => goToSlide(i));
+            slideshowThumbs.appendChild(thumb);
+        });
+
+        // Show first date
+        slideshowDateOverlay.textContent = prettyDate(slideshowPhotos[0].dateKey);
+
+        // Start auto-advance
+        startSlideshowTimer();
+    }
+
+    function goToSlide(index) {
+        if (index < 0 || index >= slideshowPhotos.length) return;
+
+        const imgs = slideshowDisplay.querySelectorAll('.slideshow-img');
+        const thumbs = slideshowThumbs.querySelectorAll('.slideshow-thumb');
+
+        // Remove active from current
+        if (imgs[slideshowIndex]) imgs[slideshowIndex].classList.remove('active');
+        if (thumbs[slideshowIndex]) thumbs[slideshowIndex].classList.remove('active');
+
+        slideshowIndex = index;
+
+        // Add active to new
+        if (imgs[slideshowIndex]) imgs[slideshowIndex].classList.add('active');
+        if (thumbs[slideshowIndex]) thumbs[slideshowIndex].classList.add('active');
+
+        // Update date
+        slideshowDateOverlay.textContent = prettyDate(slideshowPhotos[slideshowIndex].dateKey);
+
+        // Scroll thumbnail into view horizontally without scrolling the vertical page
+        if (thumbs[slideshowIndex]) {
+            const thumb = thumbs[slideshowIndex];
+            const scrollLeft = thumb.offsetLeft - slideshowThumbs.offsetLeft - (slideshowThumbs.clientWidth / 2) + (thumb.clientWidth / 2);
+            slideshowThumbs.scrollTo({ left: scrollLeft, behavior: 'smooth' });
+        }
+    }
+
+    function startSlideshowTimer() {
+        clearInterval(slideshowTimer);
+        if (slideshowPlaying && slideshowPhotos.length > 1) {
+            slideshowTimer = setInterval(() => {
+                const next = (slideshowIndex + 1) % slideshowPhotos.length;
+                goToSlide(next);
+            }, 4000);
+        }
+    }
+
+    if (slideshowPrev) {
+        slideshowPrev.addEventListener('click', () => {
+            const prev = (slideshowIndex - 1 + slideshowPhotos.length) % slideshowPhotos.length;
+            goToSlide(prev);
+            if (slideshowPlaying) startSlideshowTimer();
+        });
+    }
+
+    if (slideshowNext) {
+        slideshowNext.addEventListener('click', () => {
+            const next = (slideshowIndex + 1) % slideshowPhotos.length;
+            goToSlide(next);
+            if (slideshowPlaying) startSlideshowTimer();
+        });
+    }
+
+    if (slideshowPlayBtn) {
+        slideshowPlayBtn.addEventListener('click', () => {
+            slideshowPlaying = !slideshowPlaying;
+            const playIcon = slideshowPlayBtn.querySelector('.ss-play-icon');
+            const pauseIcon = slideshowPlayBtn.querySelector('.ss-pause-icon');
+
+            if (slideshowPlaying) {
+                playIcon.classList.add('hidden');
+                pauseIcon.classList.remove('hidden');
+                startSlideshowTimer();
+            } else {
+                playIcon.classList.remove('hidden');
+                pauseIcon.classList.add('hidden');
+                clearInterval(slideshowTimer);
+            }
+        });
+    }
 
 });
 
