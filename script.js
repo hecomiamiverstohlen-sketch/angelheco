@@ -89,7 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Heart path formula centered at (this.x, this.y)
             ctx.save();
             ctx.globalAlpha = this.opacity;
-            ctx.fillStyle = 'rgba(140, 40, 189, ' + this.opacity + ')';
+            ctx.fillStyle = 'rgba(214, 51, 108, ' + this.opacity + ')';
             ctx.beginPath();
             const x = this.x;
             const y = this.y;
@@ -976,6 +976,11 @@ document.addEventListener('DOMContentLoaded', () => {
             question: "What's my promise to you?",
             options: ["To visit every month", "To never walk away", "To buy you everything", "To always agree with you"],
             correct: 1
+        },
+        {
+            question: "What song is our 10th monthsary official soundtrack?",
+            options: ["Safe With Me", "U & Me", "Romantic Melody", "All of Me"],
+            correct: 0
         }
     ];
 
@@ -1063,11 +1068,11 @@ document.addEventListener('DOMContentLoaded', () => {
         quizScoreEl.textContent = quizScore;
 
         let message = '';
-        if (quizScore === 9) {
+        if (quizScore === 10) {
             message = 'You know me better than I know myself! 💜';
-        } else if (quizScore >= 7) {
+        } else if (quizScore >= 8) {
             message = 'Almost perfect! You really pay attention 🥹';
-        } else if (quizScore >= 5) {
+        } else if (quizScore >= 6) {
             message = 'Not bad! But we have more to learn about each other 😘';
         } else {
             message = 'Looks like we need more late-night calls! 😂💜';
@@ -1261,5 +1266,298 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-});
+    /* ==========================================
+       9. PHOTOBOOTH (REMOVED)
+       ========================================== */
+    if (false) {
+    const boothStep1 = document.getElementById('booth-step-1');
+    const boothStep2 = document.getElementById('booth-step-2');
+    const boothStep3 = document.getElementById('booth-step-3');
+    const boothStartBtn = document.getElementById('booth-start-btn');
+    const boothJoinBtnSubmit = document.getElementById('booth-join-submit');
+    const boothRoomInput = document.getElementById('booth-room-input');
+    const boothBackToStep1 = document.getElementById('booth-back-to-step1');
+    const boothCurrentRoomEl = document.getElementById('booth-current-room');
+    const boothRoleBadge = document.getElementById('booth-role-badge');
+    const boothVideo = document.getElementById('booth-video');
+    const boothCountdown = document.getElementById('booth-countdown');
+    const boothFlash = document.getElementById('booth-flash');
+    const boothStatusText = document.getElementById('booth-status-text');
+    const boothPartnerOverlay = document.getElementById('booth-partner-overlay');
+    const boothPartnerPreview = document.getElementById('booth-partner-preview');
+    const boothCaptureStartBtn = document.getElementById('booth-capture-start');
+    const boothRetakeBtn = document.getElementById('booth-retake-btn');
+    const boothNextStepBtn = document.getElementById('booth-next-step-btn');
 
+    const boothAiLoading = document.getElementById('booth-ai-loading');
+    const boothAiStatus = document.getElementById('booth-ai-status');
+    const boothWaiting = document.getElementById('booth-waiting');
+    const boothShareCode = document.getElementById('booth-share-code');
+    const boothPartnerStatusEl = document.getElementById('booth-partner-status');
+    const boothSimulatePartnerBtn = document.getElementById('booth-simulate-partner-btn');
+    const boothResult = document.getElementById('booth-result');
+    const btnLayoutStrip = document.getElementById('btn-layout-strip');
+    const btnLayoutGrid = document.getElementById('btn-layout-grid');
+    const boothCanvasStrip = document.getElementById('booth-canvas-strip');
+    const boothCanvasGrid = document.getElementById('booth-canvas-grid');
+    const boothDownloadBtn = document.getElementById('booth-download-btn');
+    const boothSaveMemoryBtn = document.getElementById('booth-save-memory-btn');
+    const boothRestartBtn = document.getElementById('booth-restart-btn');
+
+    let boothStream = null;
+    let boothRoomCode = 'HECO';
+    let boothIsPartnerA = true;
+    let boothMyPoses = []; // Array of 4 data URLs
+    let boothPartnerPoses = null; // Array of 4 data URLs when joined/synced
+    let boothActiveLayout = 'strip'; // 'strip' or 'grid'
+    let boothHasAutoSaved = false;
+
+    // Switch step view
+    function showBoothStep(stepNum) {
+        boothStep1.classList.add('hidden');
+        boothStep2.classList.add('hidden');
+        boothStep3.classList.add('hidden');
+        if (stepNum === 1) boothStep1.classList.remove('hidden');
+        if (stepNum === 2) boothStep2.classList.remove('hidden');
+        if (stepNum === 3) boothStep3.classList.remove('hidden');
+    }
+
+    // Start Camera
+    async function startBoothCamera() {
+        try {
+            if (boothStream) {
+                boothStream.getTracks().forEach(track => track.stop());
+            }
+            boothStream = await navigator.mediaDevices.getUserMedia({
+                video: { facingMode: 'user', width: { ideal: 640 }, height: { ideal: 480 } },
+                audio: false
+            });
+            if (boothVideo) {
+                boothVideo.srcObject = boothStream;
+            }
+        } catch (err) {
+            console.error('Camera access error:', err);
+            boothStatusText.textContent = '⚠️ Camera permission required to take poses!';
+        }
+    }
+
+    // Stop Camera
+    function stopBoothCamera() {
+        if (boothStream) {
+            boothStream.getTracks().forEach(track => track.stop());
+            boothStream = null;
+        }
+    }
+
+    // Step 1: Start Session button
+    if (boothStartBtn) {
+        boothStartBtn.addEventListener('click', async () => {
+            boothIsPartnerA = true;
+            boothRoomCode = 'HECO';
+            boothMyPoses = [];
+            boothPartnerPoses = null;
+            boothCurrentRoomEl.textContent = boothRoomCode;
+            boothRoleBadge.textContent = 'Partner A (Left Side)';
+            resetLiveStripSlots();
+            boothRetakeBtn.classList.add('hidden');
+            boothNextStepBtn.classList.add('hidden');
+            boothCaptureStartBtn.classList.remove('hidden');
+            boothPartnerOverlay.classList.add('hidden');
+            boothStatusText.textContent = 'Get ready for pose 1 of 4!';
+            showBoothStep(2);
+            await startBoothCamera();
+        });
+    }
+
+    // Step 1: Join Room submit
+    if (boothJoinBtnSubmit) {
+        boothJoinBtnSubmit.addEventListener('click', async () => {
+            const inputVal = (boothRoomInput.value || 'HECO').trim().toUpperCase();
+            if (!inputVal) {
+                alert('Please enter a valid Room Code!');
+                return;
+            }
+            boothRoomCode = inputVal;
+            boothIsPartnerA = false;
+            boothMyPoses = [];
+            boothCurrentRoomEl.textContent = boothRoomCode;
+            boothRoleBadge.textContent = 'Partner B (Right Side)';
+            resetLiveStripSlots();
+            boothRetakeBtn.classList.add('hidden');
+            boothNextStepBtn.classList.add('hidden');
+            boothCaptureStartBtn.classList.remove('hidden');
+            boothStatusText.textContent = 'Loading partner poses from room ' + boothRoomCode + '...';
+            showBoothStep(2);
+            await startBoothCamera();
+
+            // Try to load Partner A poses from localStorage or Supabase
+            boothPartnerPoses = await fetchPartnerPosesFromStorage(boothRoomCode, true);
+            if (boothPartnerPoses && boothPartnerPoses.length === 4) {
+                boothPartnerOverlay.classList.remove('hidden');
+                boothPartnerPreview.src = boothPartnerPoses[0];
+                boothStatusText.textContent = 'Partner poses loaded! Match their energy!';
+            } else {
+                boothStatusText.textContent = 'Ready! (Partner poses not found yet, you can still take yours)';
+            }
+        });
+    }
+
+    if (boothBackToStep1) {
+        boothBackToStep1.addEventListener('click', () => {
+            stopBoothCamera();
+            showBoothStep(1);
+        });
+    }
+
+    function resetLiveStripSlots() {
+        for (let i = 0; i < 4; i++) {
+            const slot = document.getElementById('booth-slot-' + i);
+            if (slot) {
+                slot.classList.remove('filled');
+                slot.innerHTML = `<span>${i + 1}</span>`;
+            }
+        }
+    }
+
+    // Capture 4 poses (3-second burst cycle)
+    if (boothCaptureStartBtn) {
+        boothCaptureStartBtn.addEventListener('click', async () => {
+            boothCaptureStartBtn.classList.add('hidden');
+            boothRetakeBtn.classList.add('hidden');
+            boothNextStepBtn.classList.add('hidden');
+            boothMyPoses = [];
+            resetLiveStripSlots();
+
+            for (let shot = 0; shot < 4; shot++) {
+                boothStatusText.textContent = `Pose ${shot + 1} of 4: Strike a pose!`;
+                if (boothPartnerPoses && boothPartnerPoses[shot] && boothPartnerPreview) {
+                    boothPartnerPreview.src = boothPartnerPoses[shot];
+                }
+
+                // 3-2-1 Countdown
+                for (let count = 3; count >= 1; count--) {
+                    boothCountdown.textContent = count;
+                    boothCountdown.classList.remove('hidden');
+                    await new Promise(r => setTimeout(r, 800));
+                }
+                boothCountdown.classList.add('hidden');
+
+                // Flash overlay
+                boothFlash.classList.remove('hidden');
+                boothFlash.style.opacity = '1';
+                setTimeout(() => { boothFlash.style.opacity = '0'; setTimeout(() => boothFlash.classList.add('hidden'), 300); }, 150);
+
+                // Capture snapshot from video
+                const offCanvas = document.createElement('canvas');
+                offCanvas.width = 600;
+                offCanvas.height = 800;
+                const ctx = offCanvas.getContext('2d');
+                // Mirror self
+                ctx.translate(600, 0);
+                ctx.scale(-1, 1);
+                ctx.drawImage(boothVideo, 0, 0, 600, 800);
+                const dataUrl = offCanvas.toDataURL('image/jpeg', 0.85);
+                boothMyPoses.push(dataUrl);
+
+                // Show in live strip slot
+                const slot = document.getElementById('booth-slot-' + shot);
+                if (slot) {
+                    slot.classList.add('filled');
+                    slot.innerHTML = `<img src="${dataUrl}" alt="Pose ${shot + 1}">`;
+                }
+
+                await new Promise(r => setTimeout(r, 600));
+            }
+
+            boothStatusText.textContent = 'All 4 poses captured beautifully! 💖';
+            boothRetakeBtn.classList.remove('hidden');
+            boothNextStepBtn.classList.remove('hidden');
+
+            // Save poses to storage so partner can access
+            await saveMyPosesToStorage(boothRoomCode, boothIsPartnerA, boothMyPoses);
+        });
+    }
+
+    if (boothRetakeBtn) {
+        boothRetakeBtn.addEventListener('click', () => {
+            boothCaptureStartBtn.click();
+        });
+    }
+
+    // Storage Sync helpers
+    async function saveMyPosesToStorage(roomCode, isPartnerA, poses) {
+        const suffix = isPartnerA ? '_A' : '_B';
+        const key = `boothSession_${roomCode}${suffix}`;
+        try {
+            localStorage.setItem(key, JSON.stringify(poses));
+        } catch (e) {
+            console.warn('LocalStorage save failed:', e);
+        }
+
+        // Upload to Supabase memories bucket if connected
+        if (supabase) {
+            try {
+                for (let i = 0; i < poses.length; i++) {
+                    const blob = await (await fetch(poses[i])).blob();
+                    const path = `booth_sessions/${roomCode}/partner_${isPartnerA ? 'a' : 'b'}_${i}.jpg`;
+                    await supabase.storage.from(STORAGE_BUCKET).upload(path, blob, { upsert: true, contentType: 'image/jpeg' });
+                }
+            } catch (err) {
+                console.warn('Supabase booth storage warning:', err);
+            }
+        }
+    }
+
+    async function fetchPartnerPosesFromStorage(roomCode, fetchingPartnerA) {
+        const suffix = fetchingPartnerA ? '_A' : '_B';
+        const key = `boothSession_${roomCode}${suffix}`;
+        const local = localStorage.getItem(key);
+        if (local) {
+            try { return JSON.parse(local); } catch (e) {}
+        }
+
+        if (supabase) {
+            try {
+                const poses = [];
+                for (let i = 0; i < 4; i++) {
+                    const path = `booth_sessions/${roomCode}/partner_${fetchingPartnerA ? 'a' : 'b'}_${i}.jpg`;
+                    const { data: urlData } = supabase.storage.from(STORAGE_BUCKET).getPublicUrl(path);
+                    poses.push(urlData.publicUrl + '?t=' + Date.now());
+                }
+                return poses;
+            } catch (e) {
+                return null;
+            }
+        }
+        return null;
+    }
+
+    // Step 2 to Step 3 (Proceed to AI Merge)
+    if (boothNextStepBtn) {
+        boothNextStepBtn.addEventListener('click', async () => {
+            stopBoothCamera();
+            showBoothStep(3);
+            boothAiLoading.classList.add('hidden');
+            boothWaiting.classList.add('hidden');
+            boothResult.classList.add('hidden');
+            boothHasAutoSaved = false;
+
+            // If partner poses aren't loaded yet, try fetching again
+            if (!boothPartnerPoses || boothPartnerPoses.length < 4) {
+                boothPartnerPoses = await fetchPartnerPosesFromStorage(boothRoomCode, !boothIsPartnerA);
+            }
+
+            if (boothPartnerPoses && boothPartnerPoses.length === 4) {
+                // We have both halves! Run AI processing
+                await runAiBoothCompositing();
+            } else {
+                // Show waiting screen
+                boothWaiting.classList.remove('hidden');
+                if (boothShareCode) boothShareCode.textContent = boothRoomCode;
+                boothPartnerStatusEl.textContent = 'Checking for partner poses...';
+            }
+        });
+    }
+    }
+
+});
