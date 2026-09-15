@@ -4,7 +4,19 @@
 .gemini/
 *.log
 
+# Environment variables and secrets
+.env
+.env*.local
+env.js
+
+# Python virtual environment & cache
+.venv/
+venv/
+__pycache__/
+*.pyc
+
 # OS files
 Thumbs.db
 ehthumbs.db
 Desktop.ini
+

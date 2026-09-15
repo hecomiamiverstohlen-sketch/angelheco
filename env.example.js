@@ -1,0 +1,6 @@
+// Runtime environment configuration template
+window.__ENV__ = {
+    SUPABASE_URL: 'https://your-project-ref.supabase.co',
+    SUPABASE_ANON_KEY: 'your-supabase-anon-key',
+    STORAGE_BUCKET: 'memories'
+};

@@ -1,23 +1,24 @@
 /* ==========================================
-   DESIGN SYSTEM & VARIABLES (Month 10 — Sunset Rose & Crimson Gold)
+   DESIGN SYSTEM & VARIABLES (Month 11 — Midnight Starlight & Celestial Glow)
    ========================================== */
 :root {
-    /* Color Palette (Sunset Rose & Crimson Gold Theme) */
-    --primary-blue: hsl(340, 75%, 60%);
-    --primary-blue-light: hsl(340, 80%, 93%);
-    --accent-blue: hsl(345, 85%, 48%);
-    --soft-blue: hsl(330, 65%, 75%);
-    --ice-blue: hsl(340, 50%, 98%);
+    /* Color Palette (Midnight Starlight & Celestial Glow Theme) */
+    --primary-blue: hsl(220, 85%, 65%);
+    --primary-blue-light: rgba(56, 189, 248, 0.16);
+    --accent-blue: hsl(198, 100%, 55%);
+    --soft-blue: hsl(228, 75%, 76%);
+    --ice-blue: hsl(215, 45%, 15%);
+    --starlight-gold: hsl(45, 95%, 62%);
     
-    /* Backgrounds (Vibrant Sunset Rose & Soft Champagne Gradient) */
-    --bg-gradient: linear-gradient(-45deg, hsl(330, 80%, 86%), hsl(350, 75%, 85%), hsl(280, 55%, 86%), hsl(25, 85%, 87%), hsl(340, 70%, 85%));
-    --glass-bg: rgba(255, 255, 255, 0.55);
-    --glass-border: rgba(255, 255, 255, 0.7);
-    --glass-shadow: 0 8px 32px 0 rgba(214, 51, 108, 0.12);
+    /* Backgrounds (Deep Celestial Night & Shimmering Starlight) */
+    --bg-gradient: linear-gradient(-45deg, hsl(230, 55%, 11%), hsl(245, 48%, 15%), hsl(220, 60%, 9%), hsl(260, 42%, 13%), hsl(212, 65%, 10%));
+    --glass-bg: rgba(18, 26, 48, 0.68);
+    --glass-border: rgba(125, 180, 255, 0.22);
+    --glass-shadow: 0 8px 32px 0 rgba(2, 6, 23, 0.65), 0 0 20px rgba(56, 189, 248, 0.08);
     
     /* Typography colors */
-    --text-main: hsl(340, 30%, 16%);
-    --text-muted: hsl(340, 15%, 42%);
+    --text-main: hsl(215, 30%, 94%);
+    --text-muted: hsl(220, 20%, 75%);
     --text-white: #ffffff;
     
     /* Fonts */
@@ -463,9 +464,9 @@ body {
     position: relative;
     width: 340px;
     height: 220px;
-    background: #fff;
+    background: hsl(222, 45%, 22%);
     border-radius: 0 0 12px 12px;
-    box-shadow: 0 10px 40px rgba(140, 40, 189, 0.12);
+    box-shadow: 0 12px 40px rgba(2, 6, 23, 0.7), 0 0 25px rgba(56, 189, 248, 0.15);
     cursor: pointer;
     transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
     transform-style: preserve-3d;
@@ -480,7 +481,7 @@ body {
     height: 0;
     border-left: 170px solid transparent;
     border-right: 170px solid transparent;
-    border-top: 130px solid var(--primary-blue);
+    border-top: 130px solid hsl(220, 75%, 48%);
     border-bottom: 0 solid transparent;
     transform-origin: top;
     transition: transform 0.4s ease 0.3s, z-index 0.05s ease 0.3s;
@@ -493,9 +494,9 @@ body {
     left: 0;
     width: 0;
     height: 0;
-    border-left: 170px solid var(--primary-blue-light);
-    border-right: 170px solid var(--primary-blue-light);
-    border-bottom: 110px solid var(--primary-blue-light);
+    border-left: 170px solid hsl(222, 50%, 30%);
+    border-right: 170px solid hsl(222, 50%, 30%);
+    border-bottom: 110px solid hsl(222, 55%, 24%);
     border-top: 110px solid transparent;
     border-radius: 0 0 12px 12px;
     z-index: 2;
@@ -508,19 +509,20 @@ body {
     left: 15px;
     width: 310px;
     height: 190px;
-    background: #f0f7ff;
+    background: #fdfcf9;
     border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
     z-index: 1;
     transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1) 0s, height 0.6s cubic-bezier(0.165, 0.84, 0.44, 1) 0s;
     overflow: hidden;
-    border: 1px dashed var(--primary-blue);
+    border: 1px dashed hsl(220, 70%, 65%);
 }
 
 .letter-inner {
     padding: 24px;
     height: 100%;
     overflow-y: auto;
+    color: #1e293b;
 }
 
 .letter-inner::-webkit-scrollbar {
@@ -533,22 +535,23 @@ body {
 
 .romantic-date {
     font-size: 0.75rem;
-    color: var(--text-muted);
+    color: #64748b;
     display: block;
     text-align: right;
     margin-bottom: 8px;
+    font-weight: 500;
 }
 
 .letter-greeting {
     font-family: var(--font-handwriting);
     font-size: 1.8rem;
-    color: var(--accent-blue);
+    color: hsl(220, 85%, 45%);
     margin-bottom: 15px;
 }
 
 .letter-body p {
     font-size: 0.85rem;
-    color: var(--text-main);
+    color: #334155;
     margin-bottom: 12px;
     line-height: 1.6;
 }
@@ -556,14 +559,14 @@ body {
 .letter-sig {
     font-family: var(--font-handwriting);
     font-size: 1.4rem;
-    color: var(--text-muted);
+    color: #64748b;
     margin-top: 20px;
     margin-bottom: 4px !important;
 }
 
 .letter-name {
     font-weight: 600;
-    color: var(--accent-blue);
+    color: hsl(220, 85%, 45%);
 }
 
 /* ENVELOPE OPEN STATE */
@@ -963,7 +966,11 @@ body {
     position: relative;
     transform: translateY(30px) scale(0.95);
     transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-    background: rgba(255, 255, 255, 0.85);
+    background: rgba(18, 26, 48, 0.95);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), 0 0 30px rgba(56, 189, 248, 0.15);
     max-height: 90vh;
     overflow-y: auto;
 }
@@ -980,7 +987,7 @@ body {
     height: 36px;
     border-radius: 50%;
     border: none;
-    background: rgba(0, 0, 0, 0.05);
+    background: rgba(255, 255, 255, 0.08);
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -990,7 +997,7 @@ body {
 }
 
 .modal-close-btn:hover {
-    background: rgba(0, 0, 0, 0.1);
+    background: rgba(255, 255, 255, 0.15);
     color: var(--text-main);
 }
 
@@ -1004,19 +1011,19 @@ body {
 
 /* Upload Dropzone */
 .upload-dropzone {
-    border: 2px dashed var(--primary-blue);
+    border: 2px dashed var(--accent-blue);
     border-radius: 16px;
     padding: 40px 20px;
     text-align: center;
     cursor: pointer;
     transition: var(--transition-smooth);
-    background: rgba(140, 40, 189, 0.03);
+    background: rgba(56, 189, 248, 0.05);
 }
 
 .upload-dropzone:hover,
 .upload-dropzone.dragover {
-    background: rgba(140, 40, 189, 0.08);
-    border-color: var(--accent-blue);
+    background: rgba(56, 189, 248, 0.12);
+    border-color: var(--primary-blue);
     transform: scale(1.02);
 }
 
@@ -1240,182 +1247,7 @@ body {
     border-radius: 4px;
 }
 
-/* ==========================================
-   HOW WELL DO YOU KNOW ME — QUIZ
-   ========================================== */
-.quiz-container {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 40px;
-    border-radius: 24px;
-}
 
-.quiz-progress {
-    height: 6px;
-    background: var(--primary-blue-light);
-    border-radius: 3px;
-    margin-bottom: 28px;
-    overflow: hidden;
-}
-
-.quiz-progress-fill {
-    height: 100%;
-    background: linear-gradient(90deg, var(--primary-blue), var(--accent-blue));
-    border-radius: 3px;
-    transition: width 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
-    width: 0%;
-}
-
-.quiz-question-number {
-    font-size: 0.75rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    color: var(--text-muted);
-    margin-bottom: 12px;
-}
-
-.quiz-question-text {
-    font-family: var(--font-serif);
-    font-size: 1.4rem;
-    color: var(--text-main);
-    margin-bottom: 28px;
-    line-height: 1.4;
-}
-
-.quiz-options {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-.quiz-option {
-    padding: 16px 24px;
-    border-radius: 16px;
-    border: 2px solid var(--glass-border);
-    background: rgba(255, 255, 255, 0.4);
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-align: left;
-    font-family: var(--font-sans);
-    font-size: 0.95rem;
-    color: var(--text-main);
-    font-weight: 400;
-}
-
-.quiz-option:hover:not(.disabled) {
-    border-color: var(--primary-blue);
-    background: var(--primary-blue-light);
-    transform: translateX(4px);
-}
-
-.quiz-option.correct {
-    border-color: hsl(150, 60%, 40%);
-    background: hsl(150, 60%, 94%);
-    color: hsl(150, 60%, 25%);
-    font-weight: 500;
-}
-
-.quiz-option.wrong {
-    border-color: hsl(0, 60%, 55%);
-    background: hsl(0, 60%, 95%);
-    color: hsl(0, 60%, 35%);
-    animation: quizShake 0.5s ease;
-}
-
-.quiz-option.disabled {
-    pointer-events: none;
-    opacity: 0.5;
-}
-
-.quiz-option.disabled.correct {
-    opacity: 1;
-}
-
-@keyframes quizShake {
-    0%, 100% { transform: translateX(0); }
-    20% { transform: translateX(-8px); }
-    40% { transform: translateX(8px); }
-    60% { transform: translateX(-6px); }
-    80% { transform: translateX(6px); }
-}
-
-.quiz-feedback {
-    text-align: center;
-    padding: 16px;
-    margin-top: 20px;
-    border-radius: 12px;
-    font-size: 0.95rem;
-    font-weight: 500;
-    animation: feedbackFadeIn 0.3s ease;
-}
-
-.quiz-feedback.correct-feedback {
-    background: hsl(150, 60%, 94%);
-    color: hsl(150, 60%, 30%);
-}
-
-.quiz-feedback.wrong-feedback {
-    background: hsl(0, 60%, 95%);
-    color: hsl(0, 60%, 35%);
-}
-
-@keyframes feedbackFadeIn {
-    from { opacity: 0; transform: translateY(8px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-.quiz-result {
-    text-align: center;
-    padding: 40px 20px;
-}
-
-.quiz-score-circle {
-    display: inline-flex;
-    align-items: baseline;
-    justify-content: center;
-    margin-bottom: 20px;
-}
-
-.quiz-score {
-    font-family: var(--font-serif);
-    font-size: 5rem;
-    font-weight: 700;
-    color: var(--accent-blue);
-    line-height: 1;
-}
-
-.quiz-score-total {
-    font-family: var(--font-serif);
-    font-size: 2rem;
-    color: var(--text-muted);
-}
-
-.quiz-message {
-    font-size: 1.1rem;
-    color: var(--text-main);
-    margin-bottom: 30px;
-    line-height: 1.5;
-}
-
-.quiz-retry-btn {
-    padding: 14px 36px;
-    border-radius: 30px;
-    border: none;
-    background: linear-gradient(135deg, var(--primary-blue), var(--accent-blue));
-    color: var(--text-white);
-    font-family: var(--font-sans);
-    font-size: 1rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: var(--transition-smooth);
-    box-shadow: 0 4px 20px rgba(140, 40, 189, 0.25);
-}
-
-.quiz-retry-btn:hover {
-    transform: translateY(-2px) scale(1.05);
-    box-shadow: 0 8px 30px rgba(140, 40, 189, 0.35);
-}
 
 /* ==========================================
    MEMORY SLIDESHOW
@@ -2555,18 +2387,6 @@ body {
         font-size: 1.05rem;
     }
 
-    .quiz-container {
-        padding: 30px 24px;
-    }
-
-    .quiz-question-text {
-        font-size: 1.2rem;
-    }
-
-    .quiz-score {
-        font-size: 4rem;
-    }
-
     .slideshow-wrapper {
         padding: 20px;
     }
@@ -2587,27 +2407,6 @@ body {
     .carousel-nav-btn {
         width: 34px;
         height: 34px;
-    }
-
-    .quiz-container {
-        padding: 24px 18px;
-    }
-
-    .quiz-question-text {
-        font-size: 1.1rem;
-    }
-
-    .quiz-option {
-        padding: 14px 18px;
-        font-size: 0.85rem;
-    }
-
-    .quiz-score {
-        font-size: 3.5rem;
-    }
-
-    .quiz-message {
-        font-size: 0.95rem;
     }
 
     .slideshow-wrapper {
@@ -2661,35 +2460,6 @@ body {
     .carousel-dots {
         gap: 6px;
         margin-top: 16px;
-    }
-
-    .quiz-container {
-        padding: 20px 14px;
-        border-radius: 20px;
-    }
-
-    .quiz-question-text {
-        font-size: 1rem;
-        margin-bottom: 20px;
-    }
-
-    .quiz-option {
-        padding: 12px 16px;
-        font-size: 0.8rem;
-        border-radius: 12px;
-    }
-
-    .quiz-score {
-        font-size: 3rem;
-    }
-
-    .quiz-score-total {
-        font-size: 1.5rem;
-    }
-
-    .quiz-retry-btn {
-        padding: 12px 28px;
-        font-size: 0.9rem;
     }
 
     .slideshow-wrapper {

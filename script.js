@@ -59,50 +59,67 @@ document.addEventListener('DOMContentLoaded', () => {
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
 
-    class HeartParticle {
+    class CelestialParticle {
         constructor() {
+            this.reset();
+        }
+
+        reset() {
             this.x = Math.random() * canvas.width;
-            this.y = canvas.height + Math.random() * 100;
-            this.size = Math.random() * 15 + 8; // Size between 8px and 23px
-            this.speedX = Math.random() * 1.5 - 0.75;
-            this.speedY = -(Math.random() * 1.5 + 0.5); // Upward movement
-            this.opacity = Math.random() * 0.4 + 0.2; // Keep it subtle (0.2 - 0.6)
-            this.fadeSpeed = Math.random() * 0.002 + 0.001;
+            this.y = canvas.height + Math.random() * 50;
+            this.size = Math.random() * 12 + 6;
+            this.speedX = Math.random() * 1.2 - 0.6;
+            this.speedY = -(Math.random() * 1.2 + 0.4);
+            this.opacity = Math.random() * 0.45 + 0.15;
+            this.isStar = Math.random() > 0.4;
+            // Palette: cyan, periwinkle, starlight gold, sapphire
+            const colors = [
+                '56, 189, 248',  // Cyan starlight
+                '129, 140, 248', // Periwinkle
+                '250, 204, 21',  // Moonlight gold
+                '96, 165, 250'   // Sapphire
+            ];
+            this.color = colors[Math.floor(Math.random() * colors.length)];
         }
 
         update() {
             this.x += this.speedX;
             this.y += this.speedY;
             
-            // Re-spawn if particle moves off-screen or fades completely
-            if (this.y < -this.size || this.opacity <= 0 || this.x < -this.size || this.x > canvas.width + this.size) {
-                this.x = Math.random() * canvas.width;
-                this.y = canvas.height + Math.random() * 50;
-                this.size = Math.random() * 15 + 8;
-                this.speedX = Math.random() * 1.5 - 0.75;
-                this.speedY = -(Math.random() * 1.5 + 0.5);
-                this.opacity = Math.random() * 0.4 + 0.2;
+            if (this.y < -this.size || this.x < -this.size || this.x > canvas.width + this.size) {
+                this.reset();
             }
         }
 
         draw() {
-            // Heart path formula centered at (this.x, this.y)
             ctx.save();
             ctx.globalAlpha = this.opacity;
-            ctx.fillStyle = 'rgba(214, 51, 108, ' + this.opacity + ')';
-            ctx.beginPath();
+            ctx.fillStyle = `rgba(${this.color}, ${this.opacity})`;
+            ctx.shadowBlur = 8;
+            ctx.shadowColor = `rgba(${this.color}, 0.5)`;
             const x = this.x;
             const y = this.y;
             const size = this.size;
-            
-            ctx.moveTo(x, y - size / 4);
-            // Left curve
-            ctx.bezierCurveTo(x - size/2, y - size, x - size, y - size/3, x, y + size/2);
-            // Right curve
-            ctx.bezierCurveTo(x + size, y - size/3, x + size/2, y - size, x, y - size/4);
-            
-            ctx.closePath();
-            ctx.fill();
+
+            if (this.isStar) {
+                // 4-point twinkling star
+                ctx.beginPath();
+                ctx.moveTo(x, y - size);
+                ctx.quadraticCurveTo(x, y, x + size, y);
+                ctx.quadraticCurveTo(x, y, x, y + size);
+                ctx.quadraticCurveTo(x, y, x - size, y);
+                ctx.quadraticCurveTo(x, y, x, y - size);
+                ctx.closePath();
+                ctx.fill();
+            } else {
+                // Celestial heart
+                ctx.beginPath();
+                ctx.moveTo(x, y - size / 4);
+                ctx.bezierCurveTo(x - size/2, y - size, x - size, y - size/3, x, y + size/2);
+                ctx.bezierCurveTo(x + size, y - size/3, x + size/2, y - size, x, y - size/4);
+                ctx.closePath();
+                ctx.fill();
+            }
             ctx.restore();
         }
     }
@@ -111,7 +128,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function initParticles() {
         particlesArray = [];
         for (let i = 0; i < maxParticles; i++) {
-            particlesArray.push(new HeartParticle());
+            particlesArray.push(new CelestialParticle());
         }
     }
     initParticles();
@@ -215,7 +232,8 @@ document.addEventListener('DOMContentLoaded', () => {
     function createEnvHeart() {
         const heartEl = document.createElement('div');
         heartEl.className = 'env-heart';
-        heartEl.innerHTML = '💜';
+        const celestialEmojis = ['💙', '✨', '⭐', '💫', '🌙'];
+        heartEl.innerHTML = celestialEmojis[Math.floor(Math.random() * celestialEmojis.length)];
         
         // Random horizontal travel range (-80px to 80px)
         const randX = (Math.random() * 160 - 80) + 'px';
@@ -269,10 +287,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // 6. MEMORY BANK (Supabase-backed Calendar)
     // ==========================================
 
-    // --- Supabase Configuration ---
-    const SUPABASE_URL = 'https://unwkuwipxkezilwotkdy.supabase.co';
-    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVud2t1d2lweGtlemlsd290a2R5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE1Mjc1NjUsImV4cCI6MjA5NzEwMzU2NX0.7JeOKbF95S-T5pjD1DFZCcfX8VzigGUAcTR5FE2SpUQ';
-    const STORAGE_BUCKET = 'memories';
+    // --- Supabase Configuration (reads from env.js or .env if available) ---
+    const envConfig = window.__ENV__ || {};
+    const SUPABASE_URL = envConfig.SUPABASE_URL || 'https://unwkuwipxkezilwotkdy.supabase.co';
+    const SUPABASE_ANON_KEY = envConfig.SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVud2t1d2lweGtlemlsd290a2R5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE1Mjc1NjUsImV4cCI6MjA5NzEwMzU2NX0.7JeOKbF95S-T5pjD1DFZCcfX8VzigGUAcTR5FE2SpUQ';
+    const STORAGE_BUCKET = envConfig.STORAGE_BUCKET || 'memories';
 
     let supabase = null;
     try {
@@ -928,173 +947,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
-    // ==========================================
-    // 8. HOW WELL DO YOU KNOW ME — QUIZ
-    // ==========================================
-    const quizQuestions = [
-        {
-            question: "What month did we become official?",
-            options: ["September 2025", "October 2025", "November 2025", "December 2025"],
-            correct: 1
-        },
-        {
-            question: "What's my favorite way to spend time with you?",
-            options: ["Video calls", "Playing games together", "Watching movies together", "Late-night voice calls"],
-            correct: 0
-        },
-        {
-            question: "What do I love most about you?",
-            options: ["Your smile", "Your laugh", "Your stubbornness", "Everything"],
-            correct: 3
-        },
-        {
-            question: "What's my go-to term of endearment for you?",
-            options: ["Babe", "Baby", "My Love", "Mahal"],
-            correct: 1
-        },
-        {
-            question: "What helps you fall asleep when you miss me?",
-            options: ["My playlist", "The pillow with my shirt", "Our photos", "My voice messages"],
-            correct: 1
-        },
-        {
-            question: "What's the hardest part of our LDR?",
-            options: ["Time zones", "Not being able to hug", "Missing important days", "All of the above"],
-            correct: 3
-        },
-        {
-            question: "What's my love language?",
-            options: ["Words of Affirmation", "Quality Time", "Physical Touch", "Acts of Service"],
-            correct: 0
-        },
-        {
-            question: "What do I secretly love about you?",
-            options: ["Your dragon mode", "Your clinginess", "Your jealous side", "All of the above"],
-            correct: 3
-        },
-        {
-            question: "What's my promise to you?",
-            options: ["To visit every month", "To never walk away", "To buy you everything", "To always agree with you"],
-            correct: 1
-        },
-        {
-            question: "What song is our 10th monthsary official soundtrack?",
-            options: ["Safe With Me", "U & Me", "Romantic Melody", "All of Me"],
-            correct: 0
-        }
-    ];
 
-    const quizActive = document.getElementById('quiz-active');
-    const quizResult = document.getElementById('quiz-result');
-    const quizProgressFill = document.getElementById('quiz-progress-fill');
-    const quizQuestionNumber = document.getElementById('quiz-question-number');
-    const quizQuestionText = document.getElementById('quiz-question-text');
-    const quizOptionsContainer = document.getElementById('quiz-options');
-    const quizFeedback = document.getElementById('quiz-feedback');
-    const quizScoreEl = document.getElementById('quiz-score');
-    const quizMessageEl = document.getElementById('quiz-message');
-    const quizRetryBtn = document.getElementById('quiz-retry');
-
-    let quizCurrentQuestion = 0;
-    let quizScore = 0;
-    let quizAnswered = false;
-
-    function renderQuizQuestion() {
-        if (quizCurrentQuestion >= quizQuestions.length) {
-            showQuizResult();
-            return;
-        }
-
-        const q = quizQuestions[quizCurrentQuestion];
-        quizAnswered = false;
-
-        // Update progress
-        quizProgressFill.style.width = ((quizCurrentQuestion / quizQuestions.length) * 100) + '%';
-        quizQuestionNumber.textContent = `Question ${quizCurrentQuestion + 1} of ${quizQuestions.length}`;
-        quizQuestionText.textContent = q.question;
-
-        // Hide feedback
-        quizFeedback.classList.add('hidden');
-        quizFeedback.className = 'quiz-feedback hidden';
-
-        // Render options
-        quizOptionsContainer.innerHTML = '';
-        q.options.forEach((option, i) => {
-            const btn = document.createElement('button');
-            btn.className = 'quiz-option';
-            btn.textContent = option;
-            btn.addEventListener('click', () => handleQuizAnswer(i));
-            quizOptionsContainer.appendChild(btn);
-        });
-    }
-
-    function handleQuizAnswer(selectedIndex) {
-        if (quizAnswered) return;
-        quizAnswered = true;
-
-        const q = quizQuestions[quizCurrentQuestion];
-        const options = quizOptionsContainer.querySelectorAll('.quiz-option');
-
-        // Disable all options
-        options.forEach(opt => opt.classList.add('disabled'));
-
-        // Mark correct
-        options[q.correct].classList.add('correct');
-
-        if (selectedIndex === q.correct) {
-            quizScore++;
-            quizFeedback.textContent = '✨ Correct! You know me so well!';
-            quizFeedback.className = 'quiz-feedback correct-feedback';
-        } else {
-            options[selectedIndex].classList.add('wrong');
-            quizFeedback.textContent = '😅 Not quite! The answer was: ' + q.options[q.correct];
-            quizFeedback.className = 'quiz-feedback wrong-feedback';
-        }
-
-        quizFeedback.classList.remove('hidden');
-
-        // Auto-advance after delay
-        setTimeout(() => {
-            quizCurrentQuestion++;
-            renderQuizQuestion();
-        }, 2000);
-    }
-
-    function showQuizResult() {
-        quizActive.classList.add('hidden');
-        quizResult.classList.remove('hidden');
-        quizProgressFill.style.width = '100%';
-
-        quizScoreEl.textContent = quizScore;
-
-        let message = '';
-        if (quizScore === 10) {
-            message = 'You know me better than I know myself! 💜';
-        } else if (quizScore >= 8) {
-            message = 'Almost perfect! You really pay attention 🥹';
-        } else if (quizScore >= 6) {
-            message = 'Not bad! But we have more to learn about each other 😘';
-        } else {
-            message = 'Looks like we need more late-night calls! 😂💜';
-        }
-        quizMessageEl.textContent = message;
-    }
-
-    function resetQuiz() {
-        quizCurrentQuestion = 0;
-        quizScore = 0;
-        quizAnswered = false;
-        quizActive.classList.remove('hidden');
-        quizResult.classList.add('hidden');
-        renderQuizQuestion();
-    }
-
-    if (quizRetryBtn) {
-        quizRetryBtn.addEventListener('click', resetQuiz);
-    }
-
-    // Initialize quiz
-    renderQuizQuestion();
 
 
     // ==========================================
