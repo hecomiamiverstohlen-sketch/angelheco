@@ -74,12 +74,13 @@ document.addEventListener('DOMContentLoaded', () => {
             this.isStar = Math.random() > 0.4;
             // Palette: cyan, periwinkle, starlight gold, sapphire
             const colors = [
-                '56, 189, 248',  // Cyan starlight
-                '129, 140, 248', // Periwinkle
-                '250, 204, 21',  // Moonlight gold
-                '96, 165, 250'   // Sapphire
+                '212, 175, 55',   // Gold
+                '240, 208, 112',  // Gold light
+                '255, 255, 255',  // White
+                '180, 150, 40'    // Dim gold
             ];
             this.color = colors[Math.floor(Math.random() * colors.length)];
+            this.opacity = Math.random() * 0.25 + 0.05;
         }
 
         update() {
@@ -211,29 +212,44 @@ document.addEventListener('DOMContentLoaded', () => {
     // 4. INTERACTIVE 3D ENVELOPE (LOVE LETTER)
     // ==========================================
     const envelope = document.getElementById('envelope');
+    const envelopeStage = document.getElementById('envelope-stage');
+    const letterCloseBtn = document.getElementById('letter-close-btn');
     const envelopeHeartsContainer = document.getElementById('envelope-hearts');
 
-    envelope.addEventListener('click', function(e) {
-        // Stop propagating if they are clicking scrollbar inside letter
-        if (e.target.closest('.letter-inner')) {
-            return;
-        }
+    if (envelope && envelopeStage) {
+        envelope.addEventListener('click', function(e) {
+            if (envelopeStage.classList.contains('is-open')) return;
 
-        const isOpen = this.classList.toggle('open');
+            envelopeStage.classList.add('is-open');
 
-        if (isOpen) {
-            // Trigger 12 burst heart elements
-            for (let i = 0; i < 12; i++) {
+            // Trigger 16 burst gold hearts
+            for (let i = 0; i < 16; i++) {
                 createEnvHeart();
             }
+
+            // Smoothly scroll letter into center view
+            setTimeout(() => {
+                const letterEl = document.getElementById('letter');
+                if (letterEl) {
+                    letterEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            }, 300);
+        });
+
+        if (letterCloseBtn) {
+            letterCloseBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                envelopeStage.classList.remove('is-open');
+                envelope.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            });
         }
-    });
+    }
 
     function createEnvHeart() {
         const heartEl = document.createElement('div');
         heartEl.className = 'env-heart';
-        const celestialEmojis = ['💙', '✨', '⭐', '💫', '🌙'];
-        heartEl.innerHTML = celestialEmojis[Math.floor(Math.random() * celestialEmojis.length)];
+        const goldEmojis = ['💛', '✨', '⭐', '💫', '🌟'];
+        heartEl.innerHTML = goldEmojis[Math.floor(Math.random() * goldEmojis.length)];
         
         // Random horizontal travel range (-80px to 80px)
         const randX = (Math.random() * 160 - 80) + 'px';
@@ -301,7 +317,6 @@ document.addEventListener('DOMContentLoaded', () => {
         console.warn('⚠️ Supabase not available, using localStorage fallback', err);
     }
 
-    // --- DOM Elements ---
     const calGrid = document.getElementById('cal-grid');
     const calMonthLabel = document.getElementById('cal-month-label');
     const calPrev = document.getElementById('cal-prev');
@@ -830,7 +845,7 @@ document.addEventListener('DOMContentLoaded', () => {
         populateTimelinePhotos();
     }
 
-    // Pick 3 random photos from the Memory Bank and set them on timeline cards
+    // Pick photos from the Memory Bank and set them on timeline & hero polaroids
     function populateTimelinePhotos() {
         const allKeys = Object.keys(photosCache);
         if (allKeys.length === 0) return;
@@ -838,19 +853,19 @@ document.addEventListener('DOMContentLoaded', () => {
         // Shuffle all available memory bank keys
         const shuffled = [...allKeys].sort(() => Math.random() - 0.5);
 
-        const timelineImgs = [
-            document.getElementById('timeline-img-1'),
-            document.getElementById('timeline-img-2'),
-            document.getElementById('timeline-img-3')
-        ];
-
-        // Populate all 3 cards, wrapping around if there are fewer than 3 photos in the Memory Bank
+        const timelineImgs = document.querySelectorAll('.timeline-card .polaroid img');
         timelineImgs.forEach((img, i) => {
-            if (img) {
-                const key = shuffled[i % shuffled.length];
-                if (photosCache[key]) {
-                    img.src = photosCache[key];
-                }
+            const key = shuffled[i % shuffled.length];
+            if (photosCache[key]) {
+                img.src = photosCache[key];
+            }
+        });
+
+        const heroImgs = document.querySelectorAll('.hero-polaroid img');
+        heroImgs.forEach((img, i) => {
+            const key = shuffled[(i + 3) % shuffled.length];
+            if (photosCache[key]) {
+                img.src = photosCache[key];
             }
         });
     }
@@ -867,7 +882,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const carouselDotsContainer = document.getElementById('carousel-dots');
 
     if (reasonsTrack) {
-        const cards = reasonsTrack.querySelectorAll('.reason-card');
+        const cards = reasonsTrack.querySelectorAll('.reason-scrap');
         const totalCards = cards.length;
         let currentCard = 0;
         let autoAdvanceTimer = null;
@@ -1414,3 +1429,98 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 });
+
+// ==========================================
+// ANNIVERSARY SPLASH SCREEN & LDR ANIMATION
+// ==========================================
+(function initSplashAndLdr() {
+    const overlay = document.getElementById('splash-overlay');
+    const enterBtn = document.getElementById('splash-enter-btn');
+    const bokehContainer = document.getElementById('splash-bokeh');
+
+    if (bokehContainer) {
+        // Create 20 ambient glowing bokeh circles
+        for (let i = 0; i < 20; i++) {
+            const circle = document.createElement('div');
+            circle.className = 'bokeh-circle';
+            const size = Math.floor(Math.random() * 220 + 80);
+            const x = Math.floor(Math.random() * 100);
+            const y = Math.floor(Math.random() * 100);
+            const dur = (Math.random() * 6 + 6).toFixed(1);
+            const del = (Math.random() * 4).toFixed(1);
+            const tx = (Math.random() * 60 - 30).toFixed(0);
+            const ty = (Math.random() * 60 - 30).toFixed(0);
+
+            circle.style.width = size + 'px';
+            circle.style.height = size + 'px';
+            circle.style.left = x + '%';
+            circle.style.top = y + '%';
+            circle.style.setProperty('--dur', dur + 's');
+            circle.style.setProperty('--del', del + 's');
+            circle.style.setProperty('--tx', tx + 'px');
+            circle.style.setProperty('--ty', ty + 'px');
+
+            bokehContainer.appendChild(circle);
+        }
+    }
+
+    if (overlay && enterBtn) {
+        enterBtn.addEventListener('click', () => {
+            overlay.classList.add('hidden');
+
+            // Trigger music play on entering
+            const bgMusic = document.getElementById('bg-music');
+            const musicBtn = document.getElementById('music-btn');
+            if (bgMusic) {
+                bgMusic.play().then(() => {
+                    if (musicBtn) {
+                        musicBtn.classList.add('playing');
+                        const playIcon = musicBtn.querySelector('.play-icon');
+                        const pauseIcon = musicBtn.querySelector('.pause-icon');
+                        if (playIcon) playIcon.classList.add('hidden');
+                        if (pauseIcon) pauseIcon.classList.remove('hidden');
+                    }
+                }).catch(() => {});
+            }
+
+            setTimeout(() => {
+                overlay.remove();
+            }, 1000);
+        });
+    }
+
+    // --- LDR Arc Flight Animation ---
+    const flightPath = document.getElementById('flight-path');
+    const traveler = document.getElementById('traveler');
+    if (flightPath && traveler) {
+        let pathLength = 0;
+        try {
+            pathLength = flightPath.getTotalLength();
+        } catch (e) {
+            pathLength = 500;
+        }
+
+        let progress = 0;
+        let speed = 0.003;
+        let direction = 1;
+
+        function animateTraveler() {
+            progress += speed * direction;
+            if (progress >= 1) {
+                progress = 1;
+                direction = -1;
+            } else if (progress <= 0) {
+                progress = 0;
+                direction = 1;
+            }
+
+            try {
+                const pt = flightPath.getPointAtLength(progress * pathLength);
+                traveler.setAttribute('transform', `translate(${pt.x}, ${pt.y})`);
+            } catch (e) {}
+
+            requestAnimationFrame(animateTraveler);
+        }
+        requestAnimationFrame(animateTraveler);
+    }
+})();

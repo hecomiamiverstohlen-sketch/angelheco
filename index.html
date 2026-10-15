@@ -3,370 +3,446 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy 11 Months, Babe!</title>
-    <!-- Google Fonts -->
+    <title>Happy 1st Anniversary, Babe 💛</title>
+    <meta name="description" content="365 days of us. A private anniversary for the most special person.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;400;500;600&family=Dancing+Script:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Inter:wght@300;400;500&family=Pinyon+Script&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Background Canvas for Floating Hearts & Starlight -->
+
+    <!-- GOLD PARTICLE CANVAS -->
     <canvas id="particles-canvas"></canvas>
 
-    <!-- Floating Music Controller -->
+    <!-- GRAIN OVERLAY -->
+    <div class="grain-overlay"></div>
+
+    <!-- =============================================
+         SPLASH SCREEN
+         ============================================= -->
+    <div class="splash-overlay" id="splash-overlay">
+        <div class="splash-bokeh" id="splash-bokeh"></div>
+        <div class="splash-content">
+            <p class="splash-eyebrow">October 16, 2026</p>
+            <h1 class="splash-title">Happy 1<sup>st</sup><br>Anniversary,</h1>
+            <p class="splash-name">Babe.</p>
+            <div class="splash-divider"><span></span><span class="splash-heart">♥</span><span></span></div>
+            <p class="splash-sub">365 days of choosing each other.</p>
+            <button class="splash-btn" id="splash-enter-btn">
+                Open Your Gift &nbsp;→
+            </button>
+        </div>
+    </div>
+
+    <!-- =============================================
+         MUSIC CONTROLLER
+         ============================================= -->
     <div class="music-controller" id="music-controller">
-        <!-- Audio Soundtrack: The Vamps - Somebody To You ft. Demi Lovato -->
         <audio id="bg-music" loop autoplay>
-            <source src="assets/The Vamps - Somebody To You ft. Demi Lovato.mp3" type="audio/mpeg">
-            Your browser does not support the audio element.
+            <source src="assets/While the World Let Go.mp3" type="audio/mpeg">
         </audio>
         <button id="music-btn" aria-label="Toggle Music" class="music-btn">
             <div class="visualizer">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
+                <span class="bar"></span><span class="bar"></span>
+                <span class="bar"></span><span class="bar"></span>
             </div>
-            <svg class="music-icon play-icon" viewBox="0 0 24 24" width="24" height="24">
-                <path fill="currentColor" d="M8 5v14l11-7z"/>
-            </svg>
-            <svg class="music-icon pause-icon hidden" viewBox="0 0 24 24" width="24" height="24">
-                <path fill="currentColor" d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
-            </svg>
+            <svg class="music-icon play-icon" viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M8 5v14l11-7z"/></svg>
+            <svg class="music-icon pause-icon hidden" viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
         </button>
     </div>
 
-    <!-- MAIN CONTAINER -->
-    <main class="app-container">
-        
-        <!-- 1. HERO SECTION -->
-        <header class="hero" id="hero-section">
-            <div class="glass-card hero-card fade-in">
-                <div class="sparkles-container">🌙 💙 ✨ 🪐</div>
-                <h1 class="romantic-title">Happy 11 Months, Babe!</h1>
-                <p class="subtitle">Eleven months of choosing each other, and standing on the edge of our first full year.</p>
-                <div class="heart-pulse-icon">
-                    <svg viewBox="0 0 24 24" width="64" height="64" class="svg-heart">
-                        <path fill="var(--accent-blue)" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-                    </svg>
-                </div>
-                <a href="#counter-section" class="scroll-down-btn" aria-label="Scroll Down">
-                    <svg viewBox="0 0 24 24" width="24" height="24">
-                        <path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
-                    </svg>
-                </a>
-            </div>
-        </header>
+    <main>
 
-        <!-- 2. COUNTDOWN / COUNTUP SECTION -->
-        <section class="section" id="counter-section">
-            <div class="section-header fade-in">
-                <span class="badge">Our Timeline</span>
-                <h2>Counting Every Moment</h2>
-                <p>Time passed since we promised to love each other.</p>
-            </div>
-            
-            <div class="counter-grid">
-                <div class="counter-card glass-card fade-in">
-                    <span class="number" id="count-days">00</span>
-                    <span class="label">Days</span>
+        <!-- =============================================
+             I. HERO — CINEMATIC TITLE
+             ============================================= -->
+        <section class="chapter chapter-hero" id="hero-section">
+            <div class="hero-container">
+                <div class="hero-content">
+                    <p class="chapter-label">Chapter One — The Beginning</p>
+                    <h1 class="hero-title">
+                        <em>Happy</em> 1<sup>st</sup><br>Anniversary,<br>
+                        <span class="hero-name">Babe.</span>
+                    </h1>
+                    <p class="hero-sub">365 days of growing, loving, and proving that what we have is real.</p>
+                    <div class="hero-tape-line"></div>
+                    <a href="#counter-section" class="hero-scroll-hint">
+                        <span>Scroll to Explore</span>
+                        <svg viewBox="0 0 24 24" width="16" height="16"><path fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M12 5v14M5 12l7 7 7-7"/></svg>
+                    </a>
                 </div>
-                <div class="counter-card glass-card fade-in">
-                    <span class="number" id="count-hours">00</span>
-                    <span class="label">Hours</span>
-                </div>
-                <div class="counter-card glass-card fade-in">
-                    <span class="number" id="count-minutes">00</span>
-                    <span class="label">Minutes</span>
-                </div>
-                <div class="counter-card glass-card fade-in">
-                    <span class="number" id="count-seconds">00</span>
-                    <span class="label">Seconds</span>
+
+                <div class="hero-gallery">
+                    <div class="hero-polaroid polaroid-1">
+                        <div class="polaroid-tape"></div>
+                        <div class="polaroid-frame">
+                            <img src="assets/photo-1.png" alt="Us" onerror="this.parentElement.classList.add('no-photo')">
+                        </div>
+                        <span class="polaroid-caption">us 💛</span>
+                    </div>
+                    <div class="hero-polaroid polaroid-2">
+                        <div class="polaroid-tape"></div>
+                        <div class="polaroid-frame">
+                            <img src="assets/photo-2.png" alt="My Person" onerror="this.parentElement.classList.add('no-photo')">
+                        </div>
+                        <span class="polaroid-caption">my person</span>
+                    </div>
+                    <div class="hero-polaroid polaroid-3">
+                        <div class="polaroid-tape"></div>
+                        <div class="polaroid-frame">
+                            <img src="assets/photo-3.png" alt="Forever" onerror="this.parentElement.classList.add('no-photo')">
+                        </div>
+                        <span class="polaroid-caption">forever ♾</span>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- 3. LDR MAP SECTION -->
-        <section class="section" id="ldr-section">
-            <div class="glass-card ldr-map-card fade-in">
+        <!-- =============================================
+             II. LOVE COUNTER
+             ============================================= -->
+        <section class="chapter chapter-counter" id="counter-section">
+            <div class="section-label-group">
+                <span class="gold-rule"></span>
+                <span class="chapter-eyebrow">How Long We've Been Us</span>
+                <span class="gold-rule"></span>
+            </div>
+            <h2 class="section-title">Every Second <em>Counts</em></h2>
+            <div class="counter-grid">
+                <div class="counter-block">
+                    <span class="counter-number" id="count-days">000</span>
+                    <span class="counter-label">Days</span>
+                </div>
+                <div class="counter-sep">:</div>
+                <div class="counter-block">
+                    <span class="counter-number" id="count-hours">00</span>
+                    <span class="counter-label">Hours</span>
+                </div>
+                <div class="counter-sep">:</div>
+                <div class="counter-block">
+                    <span class="counter-number" id="count-minutes">00</span>
+                    <span class="counter-label">Minutes</span>
+                </div>
+                <div class="counter-sep">:</div>
+                <div class="counter-block">
+                    <span class="counter-number" id="count-seconds">00</span>
+                    <span class="counter-label">Seconds</span>
+                </div>
+            </div>
+            <p class="counter-sub">Since October 15, 2025 — the day we said yes to each other.</p>
+        </section>
+
+        <!-- =============================================
+             III. LDR CONNECTION
+             ============================================= -->
+        <section class="chapter chapter-ldr" id="ldr-section">
+            <div class="ldr-card">
                 <div class="ldr-cities">
-                    <div class="city-indicator left-city">
-                        <span class="pulse-dot"></span>
-                        <h3>Here</h3>
-                        <p>With Me</p>
+                    <div class="ldr-city">
+                        <span class="ldr-dot"></span>
+                        <p class="ldr-city-label">Here</p>
+                        <p class="ldr-city-sub">With Me</p>
                     </div>
-                    <div class="city-indicator right-city">
-                        <span class="pulse-dot"></span>
-                        <h3>There</h3>
-                        <p>Babe</p>
+                    <div class="ldr-arc-wrap">
+                        <svg viewBox="0 0 600 120" class="ldr-svg" preserveAspectRatio="xMidYMid meet">
+                            <defs>
+                                <linearGradient id="arc-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                    <stop offset="0%" stop-color="hsl(45,80%,55%)"/>
+                                    <stop offset="50%" stop-color="hsl(45,95%,75%)"/>
+                                    <stop offset="100%" stop-color="hsl(45,80%,55%)"/>
+                                </linearGradient>
+                            </defs>
+                            <path id="flight-path" d="M 60 90 Q 300 10 540 90" fill="none" stroke="url(#arc-grad)" stroke-width="1.5" stroke-dasharray="6 5" opacity="0.7"/>
+                            <g id="traveler">
+                                <text id="traveler-heart" x="0" y="0" text-anchor="middle" dominant-baseline="middle" font-size="18">💛</text>
+                            </g>
+                        </svg>
+                    </div>
+                    <div class="ldr-city">
+                        <span class="ldr-dot"></span>
+                        <p class="ldr-city-label">There</p>
+                        <p class="ldr-city-sub">Babe</p>
                     </div>
                 </div>
-
-                <!-- LDR SVG Connection Path -->
-                <div class="svg-map-container">
-                    <svg viewBox="0 0 800 200" width="100%" height="150" class="connection-svg">
-                        <defs>
-                            <linearGradient id="line-grad" x1="0%" y1="0%" x2="100%" y2="0%">
-                                <stop offset="0%" stop-color="var(--soft-blue)" />
-                                <stop offset="50%" stop-color="var(--accent-blue)" />
-                                <stop offset="100%" stop-color="var(--soft-blue)" />
-                            </linearGradient>
-                            <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
-                                <feGaussianBlur stdDeviation="5" result="blur" />
-                                <feComposite in="SourceGraphic" in2="blur" operator="over" />
-                            </filter>
-                        </defs>
-                        <!-- Connecting Arc -->
-                        <path id="flight-path" d="M 100 120 Q 400 20 700 120" fill="none" stroke="url(#line-grad)" stroke-width="4" stroke-linecap="round" stroke-dasharray="8 6" />
-                        
-                        <!-- Glowing heart traversing path -->
-                        <g id="traveler">
-                            <path d="M-10,-10 L10,-10 L10,10 L-10,10 Z" fill="none" />
-                            <path fill="var(--accent-blue)" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" transform="scale(0.8) translate(-12, -16)" filter="url(#glow)" />
-                        </g>
-                    </svg>
-                </div>
-
                 <blockquote class="ldr-quote">
-                    "Distance means so little when someone means so much. No matter how many miles separate us, our hearts beat to the exact same rhythm."
+                    "Distance means so little when someone means so much."
                 </blockquote>
             </div>
         </section>
 
-        <!-- 4. 11 REASONS I LOVE YOU CAROUSEL -->
-        <section class="section" id="reasons-section">
-            <div class="section-header fade-in">
-                <span class="badge">Eleven Months</span>
-                <h2>11 Reasons I Love You</h2>
-                <p>One reason for every month we've grown together.</p>
+        <!-- =============================================
+             IV. 12 REASONS — SCRAPBOOK CAROUSEL
+             ============================================= -->
+        <section class="chapter chapter-reasons" id="reasons-section">
+            <div class="section-label-group">
+                <span class="gold-rule"></span>
+                <span class="chapter-eyebrow">One Year of Love</span>
+                <span class="gold-rule"></span>
             </div>
-            
-            <div class="reasons-carousel fade-in" id="reasons-carousel">
-                <button class="carousel-nav-btn prev" id="reasons-prev" aria-label="Previous">
-                    <svg viewBox="0 0 24 24" width="20" height="20"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M15 18l-6-6 6-6"/></svg>
-                </button>
+            <h2 class="section-title">12 Reasons <em>I Love You</em></h2>
+            <p class="section-sub">One reason for every month of our first beautiful year.</p>
+
+            <div class="reasons-carousel-wrap" id="reasons-carousel">
+                <button class="reel-btn reel-prev" id="reasons-prev" aria-label="Previous">‹</button>
                 <div class="reasons-track" id="reasons-track">
-                    <div class="reason-card glass-card">
-                        <div class="reason-icon">🌟</div>
-                        <span class="reason-month">Month 1</span>
-                        <h3 class="reason-title">Believing in Us</h3>
-                        <p class="reason-text">You made me believe that love across miles is real and worth fighting for.</p>
+
+                    <div class="reason-scrap">
+                        <div class="scrap-tape"></div>
+                        <span class="scrap-month">Month 01</span>
+                        <div class="scrap-icon">🌟</div>
+                        <h3 class="scrap-title">Believing in Us</h3>
+                        <p class="scrap-text">You made me believe that love across miles is real and worth fighting for.</p>
                     </div>
-                    <div class="reason-card glass-card">
-                        <div class="reason-icon">🎵</div>
-                        <span class="reason-month">Month 2</span>
-                        <h3 class="reason-title">Your Voice</h3>
-                        <p class="reason-text">Your voice on late-night calls became my favorite lullaby.</p>
+
+                    <div class="reason-scrap">
+                        <div class="scrap-tape scrap-tape-right"></div>
+                        <span class="scrap-month">Month 02</span>
+                        <div class="scrap-icon">🎵</div>
+                        <h3 class="scrap-title">Your Voice</h3>
+                        <p class="scrap-text">Your voice on late-night calls became my favorite lullaby.</p>
                     </div>
-                    <div class="reason-card glass-card">
-                        <div class="reason-icon">🤗</div>
-                        <span class="reason-month">Month 3</span>
-                        <h3 class="reason-title">Never Alone</h3>
-                        <p class="reason-text">You never let the distance make me feel alone.</p>
+
+                    <div class="reason-scrap">
+                        <div class="scrap-tape"></div>
+                        <span class="scrap-month">Month 03</span>
+                        <div class="scrap-icon">🤗</div>
+                        <h3 class="scrap-title">Never Alone</h3>
+                        <p class="scrap-text">You never let the distance make me feel alone.</p>
                     </div>
-                    <div class="reason-card glass-card">
-                        <div class="reason-icon">💪</div>
-                        <span class="reason-month">Month 4</span>
-                        <h3 class="reason-title">Choosing the Hard</h3>
-                        <p class="reason-text">You taught me that real love means choosing each other even when it's hard.</p>
+
+                    <div class="reason-scrap">
+                        <div class="scrap-tape scrap-tape-right"></div>
+                        <span class="scrap-month">Month 04</span>
+                        <div class="scrap-icon">💪</div>
+                        <h3 class="scrap-title">Choosing the Hard</h3>
+                        <p class="scrap-text">You taught me that real love means choosing each other even when it's hard.</p>
                     </div>
-                    <div class="reason-card glass-card">
-                        <div class="reason-icon">🐉</div>
-                        <span class="reason-month">Month 5</span>
-                        <h3 class="reason-title">Your Fire</h3>
-                        <p class="reason-text">Your stubbornness pushes me to be a better man for you.</p>
+
+                    <div class="reason-scrap">
+                        <div class="scrap-tape"></div>
+                        <span class="scrap-month">Month 05</span>
+                        <div class="scrap-icon">🐉</div>
+                        <h3 class="scrap-title">Your Fire</h3>
+                        <p class="scrap-text">Your stubbornness pushes me to be a better man for you.</p>
                     </div>
-                    <div class="reason-card glass-card">
-                        <div class="reason-icon">🥰</div>
-                        <span class="reason-month">Month 6</span>
-                        <h3 class="reason-title">Lambing Hours</h3>
-                        <p class="reason-text">The way you ask for lambing melts my heart every single time.</p>
+
+                    <div class="reason-scrap reason-scrap-special">
+                        <span class="scrap-month">Month 06 — June</span>
+                        <div class="scrap-icon">✨</div>
+                        <h3 class="scrap-title">June — We Knew</h3>
+                        <p class="scrap-text">June is where we realized we are really for each other. That month changed everything.</p>
                     </div>
-                    <div class="reason-card glass-card">
-                        <div class="reason-icon">🏠</div>
-                        <span class="reason-month">Month 7</span>
-                        <h3 class="reason-title">My Safe Space</h3>
-                        <p class="reason-text">You are my safe space in a world full of chaos.</p>
+
+                    <div class="reason-scrap">
+                        <div class="scrap-tape"></div>
+                        <span class="scrap-month">Month 07</span>
+                        <div class="scrap-icon">🏠</div>
+                        <h3 class="scrap-title">My Safe Space</h3>
+                        <p class="scrap-text">You are my safe space in a world full of chaos.</p>
                     </div>
-                    <div class="reason-card glass-card">
-                        <div class="reason-icon">⛈️</div>
-                        <span class="reason-month">Month 8</span>
-                        <h3 class="reason-title">Storm Proof</h3>
-                        <p class="reason-text">We proved that our love is resilient enough to survive any storm.</p>
+
+                    <div class="reason-scrap">
+                        <div class="scrap-tape scrap-tape-right"></div>
+                        <span class="scrap-month">Month 08</span>
+                        <div class="scrap-icon">⛈️</div>
+                        <h3 class="scrap-title">Storm Proof</h3>
+                        <p class="scrap-text">We proved that our love is resilient enough to survive any storm.</p>
                     </div>
-                    <div class="reason-card glass-card">
-                        <div class="reason-icon">💜</div>
-                        <span class="reason-month">Month 9</span>
-                        <h3 class="reason-title">Always Choosing You</h3>
-                        <p class="reason-text">I am so proud to be yours — and I will keep choosing you every single day.</p>
+
+                    <div class="reason-scrap">
+                        <div class="scrap-tape"></div>
+                        <span class="scrap-month">Month 09</span>
+                        <div class="scrap-icon">💛</div>
+                        <h3 class="scrap-title">Always Choosing You</h3>
+                        <p class="scrap-text">I am so proud to be yours — and I will keep choosing you every single day.</p>
                     </div>
-                    <div class="reason-card glass-card">
-                        <div class="reason-icon">🛡️</div>
-                        <span class="reason-month">Month 10</span>
-                        <h3 class="reason-title">Safe With Me</h3>
-                        <p class="reason-text">No matter how many miles separate us or what storms come, you will always be safe with me, babe.</p>
+
+                    <div class="reason-scrap">
+                        <div class="scrap-tape scrap-tape-right"></div>
+                        <span class="scrap-month">Month 10</span>
+                        <div class="scrap-icon">🛡️</div>
+                        <h3 class="scrap-title">Safe With Me</h3>
+                        <p class="scrap-text">No matter how many miles or what storms come — you will always be safe with me.</p>
                     </div>
-                    <div class="reason-card glass-card">
-                        <div class="reason-icon">🌌</div>
-                        <span class="reason-month">Month 11</span>
-                        <h3 class="reason-title">The Edge of Forever</h3>
-                        <p class="reason-text">Eleven months in, and loving you still feels as exciting as the first day, yet as peaceful as coming home. One month away from 365 days of us.</p>
+
+                    <div class="reason-scrap">
+                        <div class="scrap-tape"></div>
+                        <span class="scrap-month">Month 11</span>
+                        <div class="scrap-icon">🌌</div>
+                        <h3 class="scrap-title">The Edge of Forever</h3>
+                        <p class="scrap-text">Loving you still feels as exciting as the first day, yet as peaceful as coming home.</p>
                     </div>
+
+                    <div class="reason-scrap reason-scrap-gold">
+                        <div class="scrap-tape"></div>
+                        <span class="scrap-month">Month 12 — One Year</span>
+                        <div class="scrap-icon">🥂</div>
+                        <h3 class="scrap-title">You Are Everything</h3>
+                        <p class="scrap-text">The way you treat me, the way you care — I promise I am never going to change, and I am never leaving. Happy 1st anniversary, babe.</p>
+                    </div>
+
                 </div>
-                <button class="carousel-nav-btn next" id="reasons-next" aria-label="Next">
-                    <svg viewBox="0 0 24 24" width="20" height="20"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M9 18l6-6-6-6"/></svg>
-                </button>
-                <div class="carousel-dots" id="carousel-dots"></div>
+                <button class="reel-btn reel-next" id="reasons-next" aria-label="Next">›</button>
             </div>
+            <div class="reel-dots" id="carousel-dots"></div>
         </section>
 
-        <!-- 5. INTERACTIVE ENVELOPE / LOVE LETTER SECTION -->
-        <section class="section" id="letter-section">
-            <div class="section-header fade-in">
-                <span class="badge">For Your Eyes Only</span>
-                <h2>A Letter From My Heart</h2>
-                <p>Click the envelope below to open your virtual letter.</p>
+        <!-- =============================================
+             V. LOVE LETTER — ENVELOPE
+             ============================================= -->
+        <section class="chapter chapter-letter" id="letter-section">
+            <div class="section-label-group">
+                <span class="gold-rule"></span>
+                <span class="chapter-eyebrow">For Your Eyes Only</span>
+                <span class="gold-rule"></span>
             </div>
+            <h2 class="section-title">A Letter <em>From My Heart</em></h2>
+            <p class="section-sub">Tap the wax seal to open your anniversary letter.</p>
 
-            <!-- Envelope Wrapper -->
-            <div class="envelope-container fade-in">
+            <div class="envelope-stage fade-in" id="envelope-stage">
+                <!-- Interactive Envelope -->
                 <div class="envelope" id="envelope">
-                    <div class="flap front"></div>
-                    <div class="pocket front"></div>
-                    <div class="letter" id="letter">
-                        <div class="letter-inner">
-                            <div class="letter-header">
-                                <span class="romantic-date">September 16, 2026</span>
-                                <h3 class="letter-greeting">My Dearest Baby,</h3>
-                            </div>
-                            <div class="letter-body">
-                                <p>Happy 11th monthsary, my baby.</p>
-                                <p>Eleven months of choosing each other, eleven months of growing together through every high and low, and eleven months of falling deeper in love with you with each passing day. Looking back from where we started to where we are today, my heart is completely full of gratitude. Long distance has tested us, but every single mile has only confirmed what I already knew: you are my home, my anchor, and the person I want by my side for a lifetime.</p>
-                                <p>You are my best friend, my sweetest comfort, and the brightest part of my day. I love every single side of you, babe—your warmth, your laugh, your cute lambing moments, and even when you go full dragon mode on me. Through all the late-night calls, the countdowns, the quiet hours, and the shared dreams, we have built something unbreakable.</p>
-                                <p>We are officially standing on the doorstep of our first full year together—just one month away from 365 days of us. Until the day comes when distance is just a memory and I can hold you in my arms every single night, know that my heart belongs entirely to you. Happy 11th monthsary, babe. I am so proud and endlessly blessed to be yours.</p>
-                                <p class="letter-sig">Forever and always yours,</p>
-                                <p class="letter-name">Heco 💙</p>
-                            </div>
-                        </div>
+                    <div class="envelope-back"></div>
+                    <div class="envelope-flap" id="envelope-flap"></div>
+                    <div class="envelope-pocket"></div>
+                    <div class="envelope-seal" id="envelope-seal">
+                        <span class="seal-heart">♥</span>
+                        <span class="seal-text">OPEN</span>
                     </div>
                     <div class="envelope-hearts" id="envelope-hearts"></div>
                 </div>
+
+                <!-- Unfolded Reading Parchment -->
+                <div class="letter-parchment" id="letter">
+                    <button class="letter-close-btn" id="letter-close-btn" aria-label="Fold letter">
+                        ✕ Fold Back
+                    </button>
+                    <div class="letter-inner">
+                        <div class="letter-header">
+                            <span class="romantic-date">October 16, 2026</span>
+                            <h3 class="letter-greeting">My Dearest Babe,</h3>
+                        </div>
+                        <div class="letter-body">
+                            <p>Happy 1st Anniversary, my love. 365 days of us.</p>
+                            <p>A whole year. I still remember the moment in June when everything just clicked — when we both realized that this is real, that we are really for each other. That month changed everything for me. It was the moment I stopped wondering and started knowing. And I have been so sure of you ever since.</p>
+                            <p>There is so much I love about you, babe — but what gets me the most is the way you treat me. The way you show up for me, the way you care without even trying, the way loving you feels the most natural thing in the world. You didn't just become my girlfriend. You became my person.</p>
+                            <p>I want you to know something I mean with every part of me: I am not going anywhere. I am not going to change on you. I am not going to leave. You have all of me — all the good parts and all the flaws — and I am choosing you every single day for as long as you'll have me. That is my promise to you on our first year.</p>
+                            <p>Thank you for this year, babe. Thank you for every late-night call, every moment of patience, every time you chose us even when it was hard. Here's to year two, and every year after that.</p>
+                            <p class="letter-sig">Forever yours, always,</p>
+                            <p class="letter-name">Heco 💛</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
 
-        <!-- 7. MEMORY TIMELINE (TIMELESS PROMISES) -->
-        <section class="section" id="timeline-section">
-            <div class="section-header fade-in">
-                <span class="badge">Our Love</span>
-                <h2>To My Babe</h2>
-                <p>Timeless expressions of my love, partnership, and gratitude for you.</p>
+        <!-- =============================================
+             VI. PROMISES TIMELINE
+             ============================================= -->
+        <section class="chapter chapter-timeline" id="timeline-section">
+            <div class="section-label-group">
+                <span class="gold-rule"></span>
+                <span class="chapter-eyebrow">To My Babe</span>
+                <span class="gold-rule"></span>
             </div>
+            <h2 class="section-title">My <em>Promises</em> to You</h2>
 
             <div class="timeline-container fade-in">
                 <div class="timeline-line"></div>
-                
                 <div class="timeline-slider">
-                    <!-- Card 1 -->
-                    <div class="timeline-card glass-card" data-idx="1">
-                        <div class="polaroid-img">
-                            <img src="assets/photo-1.png" alt="Surviving Storms" class="placeholder-img" id="timeline-img-1">
-                            <div class="polaroid-caption">💜</div>
+
+                    <div class="timeline-card" data-idx="1">
+                        <div class="polaroid">
+                            <img src="assets/photo-1.png" alt="Surviving Storms" onerror="this.parentElement.classList.add('no-photo')">
+                            <span class="polaroid-caption">💛</span>
                         </div>
                         <div class="timeline-text">
                             <span class="card-badge">Surviving Storms</span>
                             <h3>We Chose the Hard Truths</h3>
-                            <p>We had uncomfortable conversations that tested everything. My heart felt heavy, but instead of running, we faced it together. We proved that what we have is strong enough to survive any storm — as long as we stay completely honest with each other.</p>
+                            <p>We had uncomfortable conversations that tested everything. Instead of running, we faced it together. We proved that what we have is strong enough to survive any storm.</p>
                         </div>
                     </div>
 
-                    <!-- Card 2 -->
-                    <div class="timeline-card glass-card" data-idx="6">
-                        <div class="polaroid-img">
-                            <img src="assets/photo-2.png" alt="My Safe Space" class="placeholder-img" id="timeline-img-2">
-                            <div class="polaroid-caption">🏠</div>
+                    <div class="timeline-card" data-idx="6">
+                        <div class="polaroid">
+                            <img src="assets/photo-2.png" alt="My Safe Space" onerror="this.parentElement.classList.add('no-photo')">
+                            <span class="polaroid-caption">🏠</span>
                         </div>
                         <div class="timeline-text">
                             <span class="card-badge">My Safe Space</span>
                             <h3>More Than a Girlfriend</h3>
-                            <p>You are not just my girlfriend — you are my best friend, my safe space, and the person I feel permanently anchored to. I love every single side of you: your sweetness, your dragon mode, and everything in between. I am never walking away.</p>
+                            <p>You are not just my girlfriend — you are my best friend, my safe space, and the person I feel permanently anchored to. I love every single side of you. I am never walking away.</p>
                         </div>
                     </div>
 
-                    <!-- Card 3 -->
-                    <div class="timeline-card glass-card" data-idx="8">
-                        <div class="polaroid-img">
-                            <img src="assets/photo-3.png" alt="Always Choosing You" class="placeholder-img" id="timeline-img-3">
-                            <div class="polaroid-caption">♾️</div>
+                    <div class="timeline-card" data-idx="8">
+                        <div class="polaroid">
+                            <img src="assets/photo-3.png" alt="Always Choosing You" onerror="this.parentElement.classList.add('no-photo')">
+                            <span class="polaroid-caption">♾️</span>
                         </div>
                         <div class="timeline-text">
                             <span class="card-badge">Always Choosing You</span>
                             <h3>Every Single Day</h3>
-                            <p>I choose you in the happy moments, I choose you during the heavy conversations, and I will keep choosing you every single day that comes after. Until I can finally wrap my arms around you for real — know that my heart is already there.</p>
+                            <p>I choose you in the happy moments. I choose you during the heavy conversations. And I will keep choosing you every single day that comes after. My heart is already there.</p>
                         </div>
                     </div>
+
                 </div>
             </div>
         </section>
 
-        <!-- 8. MEMORY SLIDESHOW -->
-        <section class="section" id="slideshow-section">
-            <div class="section-header fade-in">
-                <span class="badge">Relive It</span>
-                <h2>Our Moments Together</h2>
-                <p>A slideshow of our memories from this past month.</p>
+        <!-- =============================================
+             VII. MEMORY SLIDESHOW
+             ============================================= -->
+        <section class="chapter chapter-slideshow" id="slideshow-section">
+            <div class="section-label-group">
+                <span class="gold-rule"></span>
+                <span class="chapter-eyebrow">Relive It</span>
+                <span class="gold-rule"></span>
             </div>
-            
-            <div class="slideshow-wrapper glass-card fade-in" id="slideshow-wrapper">
-                <!-- Main Display -->
+            <h2 class="section-title">Our <em>Moments</em> Together</h2>
+            <p class="section-sub">A reel of our memories from this past month.</p>
+
+            <div class="slideshow-wrapper fade-in" id="slideshow-wrapper">
                 <div class="slideshow-display" id="slideshow-display">
                     <div class="slideshow-date-overlay" id="slideshow-date-overlay"></div>
                 </div>
-                <!-- Controls -->
                 <div class="slideshow-controls" id="slideshow-controls">
-                    <button class="slideshow-btn" id="slideshow-prev" aria-label="Previous Photo">
-                        <svg viewBox="0 0 24 24" width="20" height="20"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M15 18l-6-6 6-6"/></svg>
+                    <button class="ss-btn" id="slideshow-prev" aria-label="Previous Photo">‹</button>
+                    <button class="ss-btn ss-play" id="slideshow-play" aria-label="Play/Pause">
+                        <svg class="ss-play-icon" viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M8 5v14l11-7z"/></svg>
+                        <svg class="ss-pause-icon hidden" viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
                     </button>
-                    <button class="slideshow-btn slideshow-play-btn" id="slideshow-play" aria-label="Play/Pause">
-                        <svg class="ss-play-icon" viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M8 5v14l11-7z"/></svg>
-                        <svg class="ss-pause-icon hidden" viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
-                    </button>
-                    <button class="slideshow-btn" id="slideshow-next" aria-label="Next Photo">
-                        <svg viewBox="0 0 24 24" width="20" height="20"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M9 18l6-6-6-6"/></svg>
-                    </button>
+                    <button class="ss-btn" id="slideshow-next" aria-label="Next Photo">›</button>
                 </div>
-                <!-- Thumbnails -->
                 <div class="slideshow-thumbs" id="slideshow-thumbs"></div>
-                <!-- Empty State -->
                 <div class="slideshow-empty hidden" id="slideshow-empty">
-                    <p>📸 No memories from this month yet</p>
-                    <p class="small-text">Start adding them in the Memory Bank below!</p>
+                    <p>📸 No memories this month yet</p>
+                    <p>Add them in the Memory Bank below</p>
                 </div>
             </div>
         </section>
 
-
-        <!-- 10. MEMORY BANK SECTION -->
-        <section class="section" id="memory-section">
-            <div class="section-header fade-in">
-                <span class="badge">Our Memories</span>
-                <h2>Memory Bank</h2>
-                <p>Our everyday selfies — one photo for each day we share together.</p>
+        <!-- =============================================
+             VIII. MEMORY BANK CALENDAR
+             ============================================= -->
+        <section class="chapter chapter-memory" id="memory-section">
+            <div class="section-label-group">
+                <span class="gold-rule"></span>
+                <span class="chapter-eyebrow">Our Memories</span>
+                <span class="gold-rule"></span>
             </div>
+            <h2 class="section-title">Memory <em>Bank</em></h2>
+            <p class="section-sub">Our everyday selfies — one photo for each day we share together.</p>
 
-            <div class="memory-bank glass-card fade-in">
-                <!-- Calendar Navigation -->
+            <div class="memory-bank fade-in">
                 <div class="calendar-nav">
-                    <button class="cal-nav-btn" id="cal-prev" aria-label="Previous Month">
-                        <svg viewBox="0 0 24 24" width="20" height="20"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M15 18l-6-6 6-6"/></svg>
-                    </button>
+                    <button class="cal-nav-btn" id="cal-prev" aria-label="Previous Month">‹</button>
                     <h3 class="cal-month-label" id="cal-month-label">October 2025</h3>
-                    <button class="cal-nav-btn" id="cal-next" aria-label="Next Month">
-                        <svg viewBox="0 0 24 24" width="20" height="20"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M9 18l6-6-6-6"/></svg>
-                    </button>
+                    <button class="cal-nav-btn" id="cal-next" aria-label="Next Month">›</button>
                 </div>
 
-                <!-- Memory Stats -->
                 <div class="memory-stats">
                     <div class="stat-item">
                         <span class="stat-number" id="stat-total">0</span>
@@ -378,51 +454,38 @@
                     </div>
                 </div>
 
-                <!-- Day-of-week headers -->
                 <div class="cal-weekdays">
-                    <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
+                    <span>Sun</span><span>Mon</span><span>Tue</span>
+                    <span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
                 </div>
-
-                <!-- Calendar Grid (populated by JS) -->
                 <div class="cal-grid" id="cal-grid"></div>
             </div>
         </section>
 
-        <!-- MEMORY BANK MODAL (Upload / View) -->
+        <!-- MEMORY MODAL -->
         <div class="memory-modal-overlay" id="memory-modal-overlay">
-            <div class="memory-modal glass-card">
+            <div class="memory-modal">
                 <button class="modal-close-btn" id="modal-close-btn" aria-label="Close">
-                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M18 6L6 18M6 6l12 12"/></svg>
+                    <svg viewBox="0 0 24 24" width="20" height="20"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M18 6L6 18M6 6l12 12"/></svg>
                 </button>
-
                 <h3 class="modal-date-label" id="modal-date-label">June 15, 2026</h3>
 
-                <!-- Upload State -->
                 <div class="modal-upload-state" id="modal-upload-state">
                     <div class="upload-dropzone" id="upload-dropzone">
-                        <svg viewBox="0 0 24 24" width="48" height="48" class="upload-icon">
-                            <path fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/>
-                        </svg>
+                        <svg viewBox="0 0 24 24" width="40" height="40" class="upload-icon"><path fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
                         <p class="upload-text">Tap to upload our selfie</p>
-                        <p class="upload-hint">or drag &amp; drop an image here</p>
+                        <p class="upload-hint">or drag & drop an image here</p>
                     </div>
                     <input type="file" id="memory-file-input" accept="image/*" class="hidden-input">
                 </div>
 
-                <!-- View State (when photo exists) -->
                 <div class="modal-view-state hidden" id="modal-view-state">
                     <div class="modal-photo-wrapper">
                         <img id="modal-photo" src="" alt="Our memory" class="modal-photo">
                     </div>
                     <div class="modal-actions">
-                        <button class="modal-action-btn replace-btn" id="modal-replace-btn">
-                            <svg viewBox="0 0 24 24" width="16" height="16"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
-                            Replace
-                        </button>
-                        <button class="modal-action-btn delete-btn" id="modal-delete-btn">
-                            <svg viewBox="0 0 24 24" width="16" height="16"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
-                            Delete
-                        </button>
+                        <button class="modal-action-btn replace-btn" id="modal-replace-btn">Replace</button>
+                        <button class="modal-action-btn delete-btn" id="modal-delete-btn">Delete</button>
                     </div>
                 </div>
             </div>
@@ -431,16 +494,15 @@
     </main>
 
     <!-- FOOTER -->
-    <footer class="footer">
-        <p>I love you babe 💙</p>
-        <p class="small-text">No distance is too far for us.</p>
+    <footer class="site-footer">
+        <div class="footer-divider"><span></span><span class="footer-heart">♥</span><span></span></div>
+        <p class="footer-main">Happy 1st Anniversary, Babe 💛</p>
+        <p class="footer-sub">365 days down. A lifetime to go. I'm never leaving.</p>
     </footer>
 
-    <!-- Supabase JS Client -->
+    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-    <!-- Environment Config -->
     <script src="env.js"></script>
-    <!-- Custom Logic Script -->
     <script src="script.js"></script>
 </body>
 </html>

@@ -57,12 +57,17 @@ def main():
         port = int(sys.argv[1])
 
     handler = DevServerHandler
-    with socketserver.TCPServer(("", port), handler) as httpd:
+    # Use ThreadingHTTPServer for fast concurrent request handling
+    server_class = getattr(http.server, "ThreadingHTTPServer", http.server.HTTPServer)
+    server_class.allow_reuse_address = True
+    with server_class(("0.0.0.0", port), handler) as httpd:
         print(f"==================================================")
         print(f" Angelheco Local Dev Server running at:")
         print(f" http://localhost:{port}")
+        print(f" http://127.0.0.1:{port}")
         print(f" Press Ctrl+C to stop the server")
         print(f"==================================================")
+        sys.stdout.flush()
         try:
             httpd.serve_forever()
         except KeyboardInterrupt:
